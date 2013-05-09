@@ -1,13 +1,16 @@
 " http://py.vaults.ca/~x/python_and_vim.html
 
-set backspace=2 sts=0 ts=5 sw=5 smarttab noet ai nocp wrap
+set backspace=2 ts=4 sts=4 sw=4 smarttab noet ai nocp wrap
 set ruler nowrap backspace=2 hidden showmatch matchtime=3
 set wrap incsearch ignorecase hlsearch mouse=a
 set updatecount=50 showmatch matchtime=3
 set modeline modelines=5 nu spr
 set iskeyword-=_
 set t_Co=256
+set ffs=unix,dos,mac
+
 call pathogen#infect()
+
 filetype plugin indent on
 " paste and indent
 map <leader>P P'[v']=
@@ -35,11 +38,6 @@ map <leader>d :vnew<CR>:read !svn diff<CR>:set syntax=diff buftype=nofile<CR>ggd
 "highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
 " abbr epoch <C-R>=strftime('%s')<CR>
-abbr Firephp PSU::get('firephp')
-
-set expandtab
-set tabstop=2
-set shiftwidth=2
 
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
@@ -91,16 +89,12 @@ set includeexpr=substitute(v:fname,'-$','','g')
 syntax on
 set background=dark
 colorscheme railscasts
-"highlight Comment ctermfg=Brown guifg=Brown
 
 "folding settings
 "set foldmethod=indent
 "set foldnestmax=10
 "set nofoldenable
 "set foldlevel=1
-
-"set t_Co=256
-set ffs=unix,dos,mac
 
 function TogglePasteMode ()
 	if (&paste)
