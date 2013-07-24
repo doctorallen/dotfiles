@@ -29,6 +29,10 @@ map <silent> <leader>L :se nu!<CR>
 nmap <leader>s :source ~/.vimrc<CR>
 
 map K <Nop>
+"automatic nerd tree
+autocmd vimenter * NERDTree
+"automatically close vim if NERDTree is the only buffer open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " http://vim.wikia.com/wiki/Open_SVN_diff_window
 map <leader>d :vnew<CR>:read !svn diff<CR>:set syntax=diff buftype=nofile<CR>ggdd
