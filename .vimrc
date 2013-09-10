@@ -30,7 +30,7 @@ nmap <leader>s :source ~/.vimrc<CR>
 
 map K <Nop>
 "automatic nerd tree
-autocmd vimenter * NERDTree
+autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | endif
 "automatically close vim if NERDTree is the only buffer open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
