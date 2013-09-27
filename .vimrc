@@ -6,7 +6,7 @@ set wrap incsearch ignorecase hlsearch mouse=a
 set updatecount=50 showmatch matchtime=3
 set modeline modelines=5 nu spr
 set iskeyword-=_
-set t_Co=256
+set t_Co=16
 call pathogen#infect()
 call pathogen#helptags()
 filetype plugin indent on
@@ -99,7 +99,6 @@ set includeexpr=substitute(v:fname,'-$','','g')
 syntax on
 set background=dark
 colorscheme railscasts
-"highlight Comment ctermfg=Brown guifg=Brown
 
 "folding settings
 "set foldmethod=indent
