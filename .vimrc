@@ -35,6 +35,11 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 "vim-airline
 let g:airline_theme = 'powerlineish'
 
+"tabularize
+map <leader>t= :Tabularize /=<CR>
+map <leader>t: :Tabularize /:<CR>
+map <leader>t, :Tabularize /,<CR>
+
 "vim-ne0complcache
 let g:neocomplcache_enable_at_startup = 1
 
