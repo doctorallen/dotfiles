@@ -1,16 +1,14 @@
 " http://py.vaults.ca/~x/python_and_vim.html
 
-set backspace=2 ts=4 sts=4 sw=4 smarttab noet ai nocp wrap
+set backspace=2 sts=4 ts=4 sw=4 smarttab noet ai nocp wrap
 set ruler nowrap backspace=2 hidden showmatch matchtime=3
 set wrap incsearch ignorecase hlsearch mouse=a
 set updatecount=50 showmatch matchtime=3
 set modeline modelines=5 nu spr
 set iskeyword-=_
 set t_Co=256
-set ffs=unix,dos,mac
-
 call pathogen#infect()
-
+call pathogen#helptags()
 filetype plugin indent on
 " paste and indent
 map <leader>P P'[v']=
@@ -31,8 +29,14 @@ nmap <leader>s :source ~/.vimrc<CR>
 map K <Nop>
 "automatic nerd tree
 autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | wincmd p | endif
-"automatically close vim if NERDTree is the only buffer open
+"automatically close vim in NERDTree is the only buffer open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+"vim-airline
+let g:airline_theme = 'powerlineish'
+
+"vim-ne0complcache
+let g:neocomplcache_enable_at_startup = 1
 
 " http://vim.wikia.com/wiki/Open_SVN_diff_window
 map <leader>d :vnew<CR>:read !svn diff<CR>:set syntax=diff buftype=nofile<CR>ggdd
@@ -42,6 +46,8 @@ map <leader>d :vnew<CR>:read !svn diff<CR>:set syntax=diff buftype=nofile<CR>ggd
 "highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
 " abbr epoch <C-R>=strftime('%s')<CR>
+abbr Firephp PSU::get('firephp')
+
 
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
@@ -93,12 +99,16 @@ set includeexpr=substitute(v:fname,'-$','','g')
 syntax on
 set background=dark
 colorscheme railscasts
+"highlight Comment ctermfg=Brown guifg=Brown
 
 "folding settings
 "set foldmethod=indent
 "set foldnestmax=10
 "set nofoldenable
 "set foldlevel=1
+
+"set t_Co=256
+set ffs=unix,dos,mac
 
 function TogglePasteMode ()
 	if (&paste)
@@ -125,3 +135,18 @@ highlight DiffAdd cterm=none ctermfg=black ctermbg=Green gui=none guifg=black gu
 highlight DiffDelete cterm=none ctermfg=black ctermbg=Red gui=none guifg=black guibg=Red 
 highlight DiffChange cterm=none ctermfg=black ctermbg=Yellow gui=none guifg=black guibg=Yellow 
 highlight DiffText cterm=none ctermfg=black ctermbg=Magenta gui=none guifg=black guibg=Magenta
+
+
+hi Conceal ctermfg=Cyan ctermbg=NONE
+
+"indent guides
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+:command -nargs=1 Dbug :normal iecho '<pre>';<CR>print_r($<args>);<CR>echo '</pre>';<CR><ESC>
+" PHP-Doc configuration and key-mappings
+" autocmd FileType php inoremap <leader>c <ESC>:call PhpDocSingle()<CR>i
+autocmd FileType php nnoremap <leader>c :call PhpDocSingle()<CR>
+autocmd FileType php vnoremap <leader>c :call PhpDocRange()<CR>
+let g:pdv_cfg_autoEndFunction = 0 " Disable function end trailing comment

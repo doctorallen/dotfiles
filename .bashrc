@@ -17,17 +17,8 @@ umask 002
 alias lsa='ls -lha'
 alias ls='ls -a'
 alias ll='ls -l'
-# Server based aliases
-alias poot='cd /var/www/pohly/wp-content/themes/pohly'
-alias emerson='cd /var/www/emerson'
-alias coinup='cd /var/www/coinup'
-alias bbhd='cd /var/www/bbhd'
-alias lamp='ssh root@lamp'
-alias usdb='ssh -i ~/internal.pem ubuntu@us.coinupdb.theatomgroup.com'
-alias cadb='ssh -i ~/internal.pem ubuntu@ca.coinupdb.theatomgroup.com'
-alias cndb='ssh -i ~/internal.pem ubuntu@cn.coinupdb.theatomgroup.com'
-alias audb='ssh -i ~/internal.pem ubuntu@au.coinupdb.theatomgroup.com'
-alias zenimax='cd /var/www/zenimax_beta'
+alias ack='ack-grep'
+alias comp-ass='compass watch --css-dir app/webroot/css/ --sass-dir app/webroot/sass/'
 # Make tmux try to reconnect/reattach to an existing session, yet fallback if none are running
 alias tmux="if tmux has; then tmux -2 attach; else tmux -2 new; fi"
 
@@ -73,5 +64,3 @@ function _prompt_command() {
     fi
 }
 PROMPT_COMMAND=_prompt_command
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
