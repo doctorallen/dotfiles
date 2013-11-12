@@ -13,9 +13,6 @@
 [submodule ".vim/bundle/vim-fugitive"]
 	path = .vim/bundle/vim-fugitive
 	url = git@github.com:tpope/vim-fugitive.git
-[submodule ".vim/bundle/vim-autoclose"]
-	path = .vim/bundle/vim-autoclose
-	url = git@github.com:Townk/vim-autoclose.git
 [submodule ".vim/bundle/undotree"]
 	path = .vim/bundle/undotree
 	url = git@github.com:mbbill/undotree.git
@@ -25,6 +22,3 @@
 [submodule ".vim/bundle/tabular"]
 	path = .vim/bundle/tabular
 	url = git@github.com:godlygeek/tabular.git
-[submodule ".vim/bundle/neocomplecache"]
-	path = .vim/bundle/neocomplecache
-	url = git@github.com:Shougo/neocomplcache.vim.git
