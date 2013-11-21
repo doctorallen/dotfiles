@@ -54,18 +54,13 @@ function _git_prompt() {
     else
       # Detached HEAD.  (branch=HEAD is a faster alternative.)
       branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
-          echo HEAD`)"
+		  echo HEAD`)"
     fi
-    echo -n '\[\e[0;'"$ansi"'m\]'"($branch)"'\[\e[m\]'
+    echo -n '\[\e[0;'"$ansi"'m\]'"$branch"'\[\e[m\]'
   fi
 }
 
 function _prompt_command() {
-    CURRENT_USER=`whoami`
-    if [ "$CURRENT_USER" = "root" ]; then
-	 PS1="\[\033[0;36m\]\u`_git_prompt` \W"'$ '
-    else
-	 PS1="\u`_git_prompt` \W"'$ '
-    fi
+	 PS1="\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] [git `_git_prompt`] \n"'$ '
 }
 PROMPT_COMMAND=_prompt_command
