@@ -56,11 +56,11 @@ function _git_prompt() {
       branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
 		  echo HEAD`)"
     fi
-    echo -n '\[\e[0;'"$ansi"'m\]'"$branch"'\[\e[m\]'
+    echo -n '[git \[\e[0;'"$ansi"'m\]'"$branch"'\[\e[m\]]'
   fi
 }
 
 function _prompt_command() {
-	 PS1="\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] [git `_git_prompt`] \n"'$ '
+	 PS1="\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] `_git_prompt` \n"'$ '
 }
 PROMPT_COMMAND=_prompt_command
