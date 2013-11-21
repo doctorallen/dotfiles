@@ -1,10 +1,17 @@
 # .bashrc
-
 export PATH=~/bin:/usr/bin:/usr/local/bin:$PATH
 export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
 export SVN_EDITOR=vim
 export GIT_EDITOR=vim
 export TERM=xterm-256color
+
+#color variables
+GREEN="\[\033[01;32m\]"
+YELLOW="\[\033[01;33m\]"
+BLUE="\[\033[01;34m\]"
+CYAN="\[\033[01;36m\]"
+GREY="\[\033[00m\]"
+
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -56,11 +63,11 @@ function _git_prompt() {
       branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
 		  echo HEAD`)"
     fi
-    echo -n '[git \[\e[0;'"$ansi"'m\]'"$branch"'\[\e[m\]]'
+    echo -n '-[git \[\e[0;'"$ansi"'m\]'"$branch"'\[\e[m\]]'
   fi
 }
 
 function _prompt_command() {
-	 PS1="\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] `_git_prompt` \n"'$ '
+	 PS1="$GREY[$GREEN\u$YELLOW@$GREEN\h$GREY]-[$BLUE\w$GREY]`_git_prompt`$GREY \n"'$ '
 }
 PROMPT_COMMAND=_prompt_command
