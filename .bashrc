@@ -45,6 +45,10 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+if [ -f ~/.git-completion.bash ]; then
+	. ~/.git-completion.bash
+fi
+
 function _git_prompt() {
   local git_status="`git status -unormal 2>&1`"
   if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
