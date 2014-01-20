@@ -15,6 +15,7 @@ CYAN="\[\033[38;5;74m\]"
 LIGHTGREY="\[\033[38;5;246m\]"
 GREY="\[\033[38;5;237m\]"
 ORANGE="\[\033[38;5;202m\]"
+PURPLE="\[\033[38;5;93m\]"
 
 SEP="$GREY]$LIGHTGREY-$GREY["
 FILES="\$(/bin/ls -1 | /usr/bin/wc -l | /bin/sed 's: ::g') files, \$(/bin/ls -lha | /bin/grep -m 1 total | /bin/sed 's/total //')"
@@ -81,6 +82,6 @@ function _git_prompt() {
 }
 
 function _prompt_command() {
-PS1="$GREY[$LIGHTGREY\$(date +%H)$BLUE:$LIGHTGREY\$(date +%M)$SEP$GREEN\u$YELLOW@$ORANGE\h$SEP$BLUE\w$GREY$SEP$GREEN$FILES$GREY]`_git_prompt` $LIGHTGREY\n"'$ '
+PS1="$GREY[$LIGHTGREY\$(date +%H)$PURPLE:$LIGHTGREY\$(date +%M)$SEP$GREEN\u$YELLOW@$ORANGE\h$SEP$BLUE\w$GREY$SEP$GREEN$FILES$GREY]`_git_prompt` $LIGHTGREY\n"'$ '
 }
 PROMPT_COMMAND=_prompt_command
