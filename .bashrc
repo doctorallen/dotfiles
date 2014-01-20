@@ -1,4 +1,5 @@
 # .bashrc
+#test save
 export PATH=~/bin:/usr/bin:/usr/local/bin:$PATH
 export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
 export SVN_EDITOR=vim
@@ -6,11 +7,17 @@ export GIT_EDITOR=vim
 export TERM=xterm-256color
 
 #color variables
-GREEN="\[\033[01;32m\]"
-YELLOW="\[\033[01;33m\]"
-BLUE="\[\033[01;34m\]"
-CYAN="\[\033[01;36m\]"
-GREY="\[\033[00m\]"
+GREEN="\[\033[38;5;77m\]"
+YELLOW="\[\033[38;5;178m\]"
+BLUE="\[\033[38;5;38m\]"
+LIGHTBLUE="\[\033[38;5;27m\]"
+CYAN="\[\033[38;5;74m\]"
+LIGHTGREY="\[\033[38;5;246m\]"
+GREY="\[\033[38;5;237m\]"
+ORANGE="\[\033[38;5;202m\]"
+
+SEP="$GREY]$LIGHTGREY-$GREY["
+FILES="\$(/bin/ls -1 | /usr/bin/wc -l | /bin/sed 's: ::g') files, \$(/bin/ls -lha | /bin/grep -m 1 total | /bin/sed 's/total //')"
 
 
 # Source global definitions
@@ -28,6 +35,8 @@ alias ack='ack-grep'
 alias comp-ass='compass watch --css-dir app/webroot/css/ --sass-dir app/webroot/sass/'
 # Make tmux try to reconnect/reattach to an existing session, yet fallback if none are running
 alias tmux="if tmux has; then tmux -2 attach; else tmux -2 new; fi"
+stty ixany
+stty ixoff -ixon
 
 # Add bash aliases.
 if [ -f ~/.bash_aliases ]; then
@@ -67,11 +76,11 @@ function _git_prompt() {
       branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
 		  echo HEAD`)"
     fi
-    echo -n '-[git \[\e[0;'"$ansi"'m\]'"$branch"'\[\e[m\]]'
+	 echo -n "$LIGHTGREY-$GREY[$LIGHTGREY"'git \[\e[0;'"$ansi"'m\]'"$branch"'\[\e[m\]'"$GREY]"
   fi
 }
 
 function _prompt_command() {
-	 PS1="$GREY[$GREEN\u$YELLOW@$GREEN\h$GREY]-[$BLUE\w$GREY]`_git_prompt`$GREY \n"'$ '
+PS1="$GREY[$LIGHTGREY\$(date +%H)$BLUE:$LIGHTGREY\$(date +%M)$SEP$GREEN\u$YELLOW@$ORANGE\h$SEP$BLUE\w$GREY$SEP$GREEN$FILES$GREY]`_git_prompt` $LIGHTGREY\n"'$ '
 }
 PROMPT_COMMAND=_prompt_command
