@@ -13,10 +13,12 @@ filetype plugin indent on
 " paste and indent
 map <leader>P P'[v']=
 map <leader>p p'[v']=
+map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+
 " wordwraps a paragraph
 map <leader>q gqap
 " makes the current window wider by 10 characters
-map <leader>] 10<C-W>>
+map <leader>] 10<C-W>
 " makes the current window smaller by 10 characters
 map <leader>[ 10<C-W><
 
@@ -26,6 +28,23 @@ map <silent> <leader>l :nohl<CR>
 map <silent> <leader>L :se nu!<CR>
 nmap <leader>s :source ~/.vimrc<CR>
 
+" Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
+nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
+nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
+nnoremap <silent><leader><o> :set paste<CR>m`o<Esc>``:set nopaste<CR>
+nnoremap <silent><leader><O> :set paste<CR>m`o<Esc>``:set nopaste<CR>
+
+" If the current buffer has never been saved, it will have no name,
+" call the file browser to save it, otherwise just save it.
+command -nargs=0 -bar Update if &modified 
+                           \|    if empty(bufname('%'))
+                           \|        browse confirm write
+                           \|    else
+                           \|        confirm write
+                           \|    endif
+                           \|endif
+nnoremap <silent> <C-S> :<C-u>Update<CR>
+
 map K <Nop>
 "automatic nerd tree
 autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | wincmd p | endif
@@ -34,24 +53,23 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 "vim-airline
 let g:airline_theme = 'powerlineish'
+"let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 "tabularize
 map <leader>t= :Tabularize /=<CR>
 map <leader>t: :Tabularize /:<CR>
 map <leader>t, :Tabularize /,<CR>
 
-"vim-ne0complcache
-let g:neocomplcache_enable_at_startup = 1
-
-" http://vim.wikia.com/wiki/Open_SVN_diff_window
-map <leader>d :vnew<CR>:read !svn diff<CR>:set syntax=diff buftype=nofile<CR>ggdd
+map <leader>m :set nonumber<CR> :set mouse-=a<CR>
+map <S-Right> :wincmd l <CR>
+map <S-Left> :wincmd h <CR>
+map <S-Up> :wincmd k <CR>
+map <S-Down> :wincmd j <CR>
 
 :nnoremap <leader>i :setl noai nocin nosi inde=<CR>
 
 "highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
-
-" abbr epoch <C-R>=strftime('%s')<CR>
-abbr Firephp PSU::get('firephp')
 
 
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
@@ -60,6 +78,15 @@ autocmd BufRead,BufNewFile *.html set filetype=php
 autocmd BufRead,BufNewFile *.sass set filetype=css
 autocmd BufRead,BufNewFile *.scss set filetype=css
 autocmd BufRead,BufNewFile .*rc set filetype=sh
+autocmd BufNewFile,BufRead apache2/*.conf* setf apache
+autocmd BufNewFile,BufRead apache2/conf/*.conf* setf apache
+autocmd BufNewFile,BufRead apache2/conf.d/*.conf* setf apache
+autocmd BufNewFile,BufRead apache/*.conf* setf apache
+autocmd BufNewFile,BufRead apache/conf/*.conf* setf apache
+autocmd BufNewFile,BufRead apache/conf.d/*.conf* setf apache
+autocmd BufNewFile,BufRead httpd/*.conf* setf apache
+autocmd BufNewFile,BufRead httpd/conf/*.conf* setf apache
+autocmd BufNewFile,BufRead httpd/conf.d/*.conf* setf apache
 
 filetype indent on
 
@@ -103,7 +130,8 @@ set includeexpr=substitute(v:fname,'-$','','g')
 
 syntax on
 set background=dark
-colorscheme railscasts
+set t_Co=256
+colorscheme helix
 
 "folding settings
 "set foldmethod=indent
@@ -111,7 +139,6 @@ colorscheme railscasts
 "set nofoldenable
 "set foldlevel=1
 
-"set t_Co=256
 set ffs=unix,dos,mac
 
 function TogglePasteMode ()
@@ -143,12 +170,6 @@ highlight DiffText cterm=none ctermfg=black ctermbg=Magenta gui=none guifg=black
 
 hi Conceal ctermfg=Cyan ctermbg=NONE
 
-"indent guides
-let g:indent_guides_start_level=2
-let g:indent_guides_guide_size=1
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
-:command -nargs=1 Dbug :normal iecho '<pre>';<CR>print_r($<args>);<CR>echo '</pre>';<CR><ESC>
 " PHP-Doc configuration and key-mappings
 " autocmd FileType php inoremap <leader>c <ESC>:call PhpDocSingle()<CR>i
 autocmd FileType php nnoremap <leader>c :call PhpDocSingle()<CR>
