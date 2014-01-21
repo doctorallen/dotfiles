@@ -1,15 +1,34 @@
 " http://py.vaults.ca/~x/python_and_vim.html
 
+call pathogen#infect()
+call pathogen#helptags()
+
 set backspace=2 sts=4 ts=4 sw=4 smarttab noet ai nocp wrap
 set ruler nowrap backspace=2 hidden showmatch matchtime=3
 set wrap incsearch ignorecase hlsearch mouse=a
 set updatecount=50 showmatch matchtime=3
 set modeline modelines=5 nu spr
 set iskeyword-=_
-set t_Co=16
-call pathogen#infect()
-call pathogen#helptags()
+set suffixes=.bak,~,.o,.h,.info,.swp,.obj,.pyc
+set wildmenu
+set wildmode=list:longest,full
+
+syntax on
+set background=dark
+set t_Co=256
+colorscheme helix
+set cursorline
+set cursorcolumn
+
+"folding settings
+"set foldmethod=indent
+"set foldnestmax=10
+"set nofoldenable
+"set foldlevel=1
+
+set ffs=unix,dos,mac
 filetype plugin indent on
+
 " paste and indent
 map <leader>P P'[v']=
 map <leader>p p'[v']=
@@ -69,9 +88,7 @@ map <S-Down> :wincmd j <CR>
 
 :nnoremap <leader>i :setl noai nocin nosi inde=<CR>
 
-"highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
-
-
+"File Type functions
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead,BufNewFile *.html set filetype=php
@@ -88,9 +105,6 @@ autocmd BufNewFile,BufRead httpd/*.conf* setf apache
 autocmd BufNewFile,BufRead httpd/conf/*.conf* setf apache
 autocmd BufNewFile,BufRead httpd/conf.d/*.conf* setf apache
 
-filetype indent on
-
-set suffixes=.bak,~,.o,.h,.info,.swp,.obj,.pyc
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -111,8 +125,6 @@ autocmd FileType php set errorformat=%m\ in\ %f\ on\ line\ %l
 "let g:syntastic_check_on_open=1
 "let g:syntastic_auto_loc_list=1
 
-set wildmenu
-set wildmode=list:longest,full
 
 function! MyTabOrComplete()
 	let col = col('.')-1
@@ -124,22 +136,6 @@ function! MyTabOrComplete()
 endfunction
 inoremap <Tab> <C-R>=MyTabOrComplete()<CR>
 
-" gf helpers (goto file)
-set suffixesadd=.php,.class.php,.inc.php
-set includeexpr=substitute(v:fname,'-$','','g')
-
-syntax on
-set background=dark
-set t_Co=256
-colorscheme helix
-
-"folding settings
-"set foldmethod=indent
-"set foldnestmax=10
-"set nofoldenable
-"set foldlevel=1
-
-set ffs=unix,dos,mac
 
 function TogglePasteMode ()
 	if (&paste)
@@ -160,15 +156,6 @@ nmap <silent> ,d "xdd<CR>:wviminfo! ~/.viminfo<CR>
 nmap <silent> ,p :rviminfo! ~/.viminfo<CR>"xp
 nmap <silent> ,p :rviminfo! ~/.viminfo<CR>"xp
 nmap ,v :tabedit $MYVIMRC<CR>
-
-" Change highlight colors for vimdiff
-highlight DiffAdd cterm=none ctermfg=black ctermbg=Green gui=none guifg=black guibg=Green 
-highlight DiffDelete cterm=none ctermfg=black ctermbg=Red gui=none guifg=black guibg=Red 
-highlight DiffChange cterm=none ctermfg=black ctermbg=Yellow gui=none guifg=black guibg=Yellow 
-highlight DiffText cterm=none ctermfg=black ctermbg=Magenta gui=none guifg=black guibg=Magenta
-
-
-hi Conceal ctermfg=Cyan ctermbg=NONE
 
 " PHP-Doc configuration and key-mappings
 " autocmd FileType php inoremap <leader>c <ESC>:call PhpDocSingle()<CR>i

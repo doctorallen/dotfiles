@@ -62,21 +62,21 @@ function _git_prompt() {
   local git_status="`git status -unormal 2>&1`"
   if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
     if [[ "$git_status" =~ nothing\ to\ commit ]]; then
-      local ansi=32
+      local ansi=77
     elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
-      local ansi=33
+      local ansi=221
     else
-      local ansi=35
+      local ansi=103
     fi
     if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
       branch=${BASH_REMATCH[1]}
-      test "$branch" != master || local ansi=31
+      test "$branch" != master || local ansi=88
     else
       # Detached HEAD.  (branch=HEAD is a faster alternative.)
       branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
 		  echo HEAD`)"
     fi
-	 echo -n "$LIGHTGREY-$GREY[$LIGHTGREY"'git \[\e[0;'"$ansi"'m\]'"$branch"'\[\e[m\]'"$GREY]"
+	 echo -n "$LIGHTGREY-$GREY[$LIGHTGREY"'git \[\033[38;5;'"$ansi"'m\]'"$branch"'\[\e[m\]'"$GREY]"
   fi
 }
 
