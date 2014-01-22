@@ -81,6 +81,6 @@ function _git_prompt() {
 }
 
 function _prompt_command() {
-PS1="$GREY[$LIGHTGREY\$(date +%H)$ORANGE:$LIGHTGREY\$(date +%M)$SEP$BLUE\u$PURPLE@$ORANGE\h$SEP$BLUE\w$GREY$SEP$PURPLE$FILES$GREY]`_git_prompt` $LIGHTGREY\n"'$ '
+PS1="$GREY[$LIGHTGREY\$(date +%l)$ORANGE:$LIGHTGREY\$(date +%M) $ORANGE\$(date +%p)$SEP$BLUE\u$PURPLE@$ORANGE\h$SEP$BLUE\w$GREY$SEP$PURPLE$FILES$GREY]`_git_prompt` $LIGHTGREY\n"'$ '
 }
 PROMPT_COMMAND=_prompt_command
