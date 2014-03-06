@@ -18,7 +18,6 @@ set background=dark
 set t_Co=256
 colorscheme helix
 set cursorline
-set cursorcolumn
 
 "folding settings
 "set foldmethod=indent
