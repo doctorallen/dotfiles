@@ -18,7 +18,6 @@ set background=dark
 set t_Co=256
 colorscheme helix
 set cursorline
-set cursorcolumn
 
 "folding settings
 "set foldmethod=indent
@@ -161,4 +160,6 @@ nmap ,v :tabedit $MYVIMRC<CR>
 " autocmd FileType php inoremap <leader>c <ESC>:call PhpDocSingle()<CR>i
 autocmd FileType php nnoremap <leader>c :call PhpDocSingle()<CR>
 autocmd FileType php vnoremap <leader>c :call PhpDocRange()<CR>
+let g:pdv_cfg_Author = "David Allen <trooper898@gmail.com>"
+
 let g:pdv_cfg_autoEndFunction = 0 " Disable function end trailing comment

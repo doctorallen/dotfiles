@@ -29,8 +29,8 @@ fi
 
 umask 002
 alias lsa='ls -lha'
-alias ls='ls -a'
-alias ll='ls -l'
+alias ls='ls -atGF'
+alias ll='ls -latGF'
 alias ack='ack-grep'
 alias comp-ass='compass watch --css-dir app/webroot/css/ --sass-dir app/webroot/sass/'
 # Make tmux try to reconnect/reattach to an existing session, yet fallback if none are running
@@ -57,6 +57,8 @@ fi
 if [ -f ~/.git-completion.bash ]; then
 	. ~/.git-completion.bash
 fi
+# completion of .ssh/hosts
+complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
 
 function _git_prompt() {
   local git_status="`git status -unormal 2>&1`"
@@ -84,3 +86,10 @@ function _prompt_command() {
 PS1="$GREY[$LIGHTGREY\$(date +%l)$ORANGE:$LIGHTGREY\$(date +%M) $ORANGE\$(date +%p)$SEP$BLUE\u$PURPLE@$ORANGE\h$SEP$BLUE\w$GREY$SEP$PURPLE$FILES$GREY]`_git_prompt` $LIGHTGREY\n"'$ '
 }
 PROMPT_COMMAND=_prompt_command
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
