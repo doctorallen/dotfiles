@@ -61,6 +61,10 @@ fi
 # completion of .ssh/hosts
 complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
 
+function stopvm(){
+/usr/bin/VBoxManage controlvm "$@" poweroff;
+}
+
 function _git_prompt() {
   local git_status="`git status -unormal 2>&1`"
   if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
