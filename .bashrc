@@ -58,8 +58,12 @@ fi
 if [ -f ~/.git-completion.bash ]; then
 	. ~/.git-completion.bash
 fi
+
+if [ -f /etc/bash_completion ]; then
+	. /etc/bash_completion
+fi
 # completion of .ssh/hosts
-complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
+#complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
 
 function stopvm(){
 /usr/bin/VBoxManage controlvm "$@" poweroff;
