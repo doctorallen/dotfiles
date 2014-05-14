@@ -69,6 +69,10 @@ function stopvm(){
 /usr/bin/VBoxManage controlvm "$@" poweroff;
 }
 
+function tagssh(){
+/usr/bin/ssh -i ~/.ssh/tag-aws.pem ubuntu@"$@".theatomgroup.com
+}
+
 function _git_prompt() {
   local git_status="`git status -unormal 2>&1`"
   if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
