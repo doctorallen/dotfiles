@@ -31,3 +31,9 @@
 [submodule ".vim/bundle/tlib_vim"]
 	path = .vim/bundle/tlib_vim
 	url = git@github.com:tomtom/tlib_vim.git
+[submodule ".vim/bundle/vim-blade"]
+	path = .vim/bundle/vim-blade
+	url = git://github.com/xsbeats/vim-blade.git
+[submodule ".vim/bundle/vim-surround"]
+	path = .vim/bundle/vim-surround
+	url = git@github.com:tpope/vim-surround.git
