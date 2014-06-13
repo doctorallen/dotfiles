@@ -34,8 +34,10 @@ alias ll='ls -latGF'
 alias ack='ack-grep'
 alias comp-ass='compass watch --css-dir app/webroot/css/ --sass-dir app/webroot/sass/'
 alias lst='sh ~/lstime.sh'
+alias shoot='sh ~/img.sh'
 # Make tmux try to reconnect/reattach to an existing session, yet fallback if none are running
 alias tmux="if tmux has; then tmux -2 attach; else tmux -2 new; fi"
+alias gp='git pull origin master'
 stty ixany
 stty ixoff -ixon
 
