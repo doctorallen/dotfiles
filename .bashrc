@@ -36,10 +36,17 @@ alias ll='ls -latGF'
 alias ack='ack-grep'
 alias comp-ass='compass watch --css-dir app/webroot/css/ --sass-dir app/webroot/sass/'
 alias lst='sh ~/lstime.sh'
-alias shoot='sh ~/img.sh'
+
 # Make tmux try to reconnect/reattach to an existing session, yet fallback if none are running
 alias tmux="if tmux has; then tmux -2 attach; else tmux -2 new; fi"
+
+#Git aliases
 alias gp='git pull origin master'
+alias gstat='git status'
+alias gs='git status'
+alias ga='git add .'
+alias gc='git commit'
+alias gph='git push origin HEAD'
 stty ixany
 stty ixoff -ixon
 
