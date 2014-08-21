@@ -35,13 +35,15 @@
 	fall = fetch --all
 	pullbase = pull --rebase
 	remoteclean = remote prune # No shorter, but more semantic.... at least to me. :P
-	localclean = !git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d
+	merged = !git branch --merged | grep -v '^\\*'
+	localclean = !git merged | xargs --no-run-if-empty git branch -d
 	subupdate = submodule update --init --recursive
 	syncup = !git checkout master && git pullbase upstream master && git subupdate
 	syncthis = !git pullbase origin HEAD && git subupdate
 	syncthisup = !git pullbase upstream `git rev-parse --abbrev-ref HEAD` && git subupdate
 	call = !git ci -a
 	ignored = clean -ndX
+	pup = !git submodule init && git submodule update && git submodule status
 [core]
 	pager = less -FRSX
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
