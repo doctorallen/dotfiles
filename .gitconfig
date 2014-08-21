@@ -1,0 +1,60 @@
+[user]
+	name = David Allen
+	email = trooper898@gmail.com
+[github]
+	user = drallen1
+[push]
+	default = simple
+[pull]
+	default = simple
+[status]
+	displaycommentprefix = true
+[alias]
+	st = status
+	ci = commit -v
+	br = branch
+	co = checkout
+	df = diff
+	dft = difftool
+	diffc = diff --cached
+	dfc = diff --cached
+	dftc = difftool --cached
+	diffpager = !git diff --color=always | less -R
+	diffp = !git diffpager
+	dfp = !git diffpager
+	s = status -s
+	files = diff --name-only
+	last = diff --name-only HEAD^!
+	showfiles = show --name-only
+	showlast = show --name-only HEAD^!
+	excluded = ls-files --others --ignored --exclude-standard
+	lg = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	pushhead = push origin HEAD
+	pushup = push upstream HEAD
+	mergeflow = !git merge --no-ff
+	fall = fetch --all
+	pullbase = pull --rebase
+	remoteclean = remote prune # No shorter, but more semantic.... at least to me. :P
+	subupdate = submodule update --init --recursive
+	syncup = !git checkout master && git pullbase upstream master && git subupdate
+	syncthis = !git pullbase origin HEAD && git subupdate
+	syncthisup = !git pullbase upstream `git rev-parse --abbrev-ref HEAD` && git subupdate
+	call = !git ci -a
+[core]
+	pager = less -FRSX
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	ui = true
+	pager = true
+[merge]
+	ff = false
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[hub]
+	protocol = ssh
