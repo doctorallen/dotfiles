@@ -44,9 +44,12 @@
 	call = !git ci -a
 	ignored = clean -ndX
 	pup = !git submodule init && git submodule update && git submodule status
+	lh = rev-parse HEAD
 [core]
 	pager = less -FRSX
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	fileMode = false
+	ignore = update-index --assume-unchanged
 [color]
 	diff = auto
 	status = auto
