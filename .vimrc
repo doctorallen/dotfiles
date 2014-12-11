@@ -103,6 +103,7 @@ autocmd BufNewFile,BufRead apache/conf.d/*.conf* setf apache
 autocmd BufNewFile,BufRead httpd/*.conf* setf apache
 autocmd BufNewFile,BufRead httpd/conf/*.conf* setf apache
 autocmd BufNewFile,BufRead httpd/conf.d/*.conf* setf apache
+autocmd BufRead,BufNewFile *.md set filetype=markdown
 
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -157,9 +158,9 @@ nmap <silent> ,p :rviminfo! ~/.viminfo<CR>"xp
 nmap ,v :tabedit $MYVIMRC<CR>
 
 " PHP-Doc configuration and key-mappings
-" autocmd FileType php inoremap <leader>c <ESC>:call PhpDocSingle()<CR>i
+autocmd FileType php inoremap <leader>c <ESC>:call PhpDocSingle()<CR>i
 autocmd FileType php nnoremap <leader>c :call PhpDocSingle()<CR>
 autocmd FileType php vnoremap <leader>c :call PhpDocRange()<CR>
-let g:pdv_cfg_Author = "David Allen <trooper898@gmail.com>"
 
+let g:pdv_cfg_Author = "David Allen <trooper898@gmail.com>"
 let g:pdv_cfg_autoEndFunction = 0 " Disable function end trailing comment
