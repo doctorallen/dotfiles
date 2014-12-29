@@ -126,15 +126,15 @@ autocmd FileType php set errorformat=%m\ in\ %f\ on\ line\ %l
 "let g:syntastic_auto_loc_list=1
 
 
-function! MyTabOrComplete()
-	let col = col('.')-1
-		if !col || getline('.')[col-1] !~ '\k'
-		return "\<tab>"
-	else
-		return "\<C-N>"
-	endif
-endfunction
-inoremap <Tab> <C-R>=MyTabOrComplete()<CR>
+"function! MyTabOrComplete()
+"	let col = col('.')-1
+"		if !col || getline('.')[col-1] !~ '\k'
+"		return "\<tab>"
+"	else
+"		return "\<C-N>"
+"	endif
+"endfunction
+"inoremap <Tab> <C-R>=MyTabOrComplete()<CR>
 
 
 function TogglePasteMode ()
