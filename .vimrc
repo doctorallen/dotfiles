@@ -92,6 +92,7 @@ autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead,BufNewFile *.html set filetype=php
 autocmd BufRead,BufNewFile *.sass set filetype=css
+autocmd BufRead,BufNewFile *.less set filetype=less
 autocmd BufRead,BufNewFile *.scss set filetype=css
 autocmd BufRead,BufNewFile .*rc set filetype=sh
 autocmd BufNewFile,BufRead apache2/*.conf* setf apache
