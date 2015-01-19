@@ -46,6 +46,7 @@
 	pup = !git submodule init && git submodule update && git submodule status
 	lh = rev-parse HEAD
 	b = branch -a
+	today = log --since='yesterday' --format='* %s' --author='David Allen'
 [core]
 	pager = less -FRSX
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol

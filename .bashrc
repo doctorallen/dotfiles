@@ -30,6 +30,7 @@ fi
 # User specific aliases and functions
 
 umask 002
+alias openhere='nautilus .'
 alias lsa='ls -lha'
 alias ls='ls -atGF'
 alias ll='ls -latGF'
@@ -38,6 +39,8 @@ alias gc='cat ~/.gitconfig | grep'
 alias comp-ass='compass watch --css-dir app/webroot/css/ --sass-dir app/webroot/sass/'
 alias lst='sh ~/lstime.sh'
 alias tink='php artisan tinker'
+alias art='php artisan'
+alias dbref='php artisan migrate:refresh && php artisan db:seed'
 
 # Make tmux try to reconnect/reattach to an existing session, yet fallback if none are running
 alias tmux="if tmux has; then tmux -2 attach; else tmux -2 new; fi"
