@@ -82,6 +82,18 @@ function tagssh(){
 /usr/bin/ssh -i ~/.ssh/tag-aws.pem ubuntu@"$@".theatomgroup.com
 }
 
+function p(){
+	cd /var/www/"$@"
+}
+
+_p (){
+	local cur
+    cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $( compgen -S/ -d /var/www/$cur | cut -b 10- ) )
+}
+
+complete -o nospace -F _p p
+
 function _git_prompt() {
   local git_status="`git status -unormal 2>&1`"
   if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
@@ -115,3 +127,4 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+bash ~/login.sh
