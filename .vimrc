@@ -54,7 +54,7 @@ nnoremap <silent><leader><O> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 
 " If the current buffer has never been saved, it will have no name,
 " call the file browser to save it, otherwise just save it.
-command -nargs=0 -bar Update if &modified 
+command -nargs=0 -bar Update if &modified
                            \|    if empty(bufname('%'))
                            \|        browse confirm write
                            \|    else
@@ -106,7 +106,6 @@ autocmd BufNewFile,BufRead httpd/conf/*.conf* setf apache
 autocmd BufNewFile,BufRead httpd/conf.d/*.conf* setf apache
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 
-
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -126,7 +125,6 @@ autocmd FileType php set errorformat=%m\ in\ %f\ on\ line\ %l
 "let g:syntastic_check_on_open=1
 "let g:syntastic_auto_loc_list=1
 
-
 "function! MyTabOrComplete()
 "	let col = col('.')-1
 "		if !col || getline('.')[col-1] !~ '\k'
@@ -136,7 +134,6 @@ autocmd FileType php set errorformat=%m\ in\ %f\ on\ line\ %l
 "	endif
 "endfunction
 "inoremap <Tab> <C-R>=MyTabOrComplete()<CR>
-
 
 function TogglePasteMode ()
 	if (&paste)
@@ -148,6 +145,17 @@ function TogglePasteMode ()
      endif
 endfunction
 
+function Trailspace ()
+	%s/\s\+$//e
+endfunction
+
+function Condenselines ()
+	call Trailspace()
+	%s/\n\{3,}/\r\r/e
+endfunction
+
+map <leader>n :call Condenselines()<CR>
+
 " external copy paste -- saves selected buffer into your .viminfo file
 " so you can paste it into another vim instance
 vmap <silent> ,y "xy<CR>:wviminfo! ~/.viminfo<CR>
@@ -157,6 +165,10 @@ nmap <silent> ,d "xdd<CR>:wviminfo! ~/.viminfo<CR>
 nmap <silent> ,p :rviminfo! ~/.viminfo<CR>"xp
 nmap <silent> ,p :rviminfo! ~/.viminfo<CR>"xp
 nmap ,v :tabedit $MYVIMRC<CR>
+
+" php namespace
+inoremap <Leader>e <C-O>:call PhpExpandClass()<CR>
+noremap <Leader>e :call PhpExpandClass()<CR>
 
 " PHP-Doc configuration and key-mappings
 autocmd FileType php inoremap <leader>c <ESC>:call PhpDocSingle()<CR>i
