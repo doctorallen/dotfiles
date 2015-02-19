@@ -47,6 +47,7 @@
 	lh = rev-parse HEAD
 	b = branch -a
 	today = log --since='12am' --format='* %s' --author='David Allen'
+	yesterday = log --since='yesterday' --until='12am' --format='* %s' --author='David Allen'
 [core]
 	pager = less -FRSX
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
