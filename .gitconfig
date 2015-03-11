@@ -43,6 +43,7 @@
 	syncthisup = !git pullbase upstream `git rev-parse --abbrev-ref HEAD` && git subupdate
 	call = !git ci -a
 	ignored = clean -ndX
+	ignore = update-index --assume-unchanged
 	pup = !git submodule init && git submodule update && git submodule status
 	lh = rev-parse HEAD
 	b = branch -a
