@@ -19,7 +19,7 @@ RED="\[\033[38;5;95m\]"
 LIGHTGREEN="\[\033[38;5;113m\]"
 
 SEP="$GREY]$LIGHTGREY-$GREY["
-FILES="\$(/bin/ls -1 | /usr/bin/wc -l | /bin/sed 's: ::g') files, \$(/bin/ls -lha | /bin/grep -m 1 total | /bin/sed 's/total //')"
+FILES="\$(/bin/ls -1 | /usr/bin/wc -l | /usr/bin/sed 's: ::g') files, \$(/bin/ls -lha | /usr/bin/grep -m 1 total | /usr/bin/sed 's/total //')"
 
 
 # Source global definitions
@@ -71,6 +71,11 @@ fi
 if [ -f /etc/bash_completion ]; then
 	. /etc/bash_completion
 fi
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+
 # completion of .ssh/hosts
 #complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
 
@@ -120,11 +125,3 @@ function _prompt_command() {
 PS1="$GREY[$LIGHTGREY\$(date +%l)$ORANGE:$LIGHTGREY\$(date +%M) $ORANGE\$(date +%p)$SEP$BLUE\u$RED@$ORANGE\h$SEP$BLUE\w$GREY$SEP$RED$FILES$GREY]`_git_prompt` $LIGHTGREY\n"'$ '
 }
 PROMPT_COMMAND=_prompt_command
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-bash ~/login.sh
