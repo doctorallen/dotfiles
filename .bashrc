@@ -1,6 +1,6 @@
-# .bashrc
-#test save
-export PATH=~/bin:/usr/bin:/usr/local/bin:$PATH
+# .hashrc
+export GOPATH=$HOME/go
+export PATH=~/bin:/usr/bin:/usr/local/bin:$GOPATH/bin:$PATH
 export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
 export SVN_EDITOR=vim
 export GIT_EDITOR=vim
@@ -41,7 +41,9 @@ alias comp-ass='compass watch --css-dir app/webroot/css/ --sass-dir app/webroot/
 alias lst='sh ~/lstime.sh'
 alias tink='php artisan tinker'
 alias art='php artisan'
-alias dbref='php artisan migrate:refresh && php artisan db:seed'
+alias dbref='php artisan migrate:refresh --seed'
+alias cda='composer dumpautoload'
+alias v='vagrant'
 
 # Make tmux try to reconnect/reattach to an existing session, yet fallback if none are running
 alias tmux="if tmux has; then tmux -2 attach; else tmux -2 new; fi"
@@ -88,6 +90,10 @@ function tagssh(){
 /usr/bin/ssh -i ~/.ssh/tag-aws.pem ubuntu@"$@".theatomgroup.com
 }
 
+function tagscp(){
+/usr/bin/scp -i ~/.ssh/tag-aws.pem $1 ubuntu@"$2".theatomgroup.com:/home/ubuntu/
+}
+
 function p(){
 	cd /var/www/"$@"
 }
@@ -99,6 +105,18 @@ _p (){
 }
 
 complete -o nospace -F _p p
+
+function g(){
+	cd ~/go/src/github.com/doctorallen/"$@"
+}
+
+_g (){
+	local cur
+    cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $( compgen -S/ -d ~/go/src/github.com/doctorallen/$cur | cut -b 44- ) )
+}
+
+complete -o nospace -F _g g
 
 function _git_prompt() {
   local git_status="`git status -unormal 2>&1`"
