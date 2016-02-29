@@ -43,3 +43,6 @@
 [submodule ".vim/bundle/vim-snippets"]
 	path = .vim/bundle/vim-snippets
 	url = git@github.com:honza/vim-snippets.git
+[submodule ".vim/bundle/nerdcommenter"]
+	path = .vim/bundle/nerdcommenter
+	url = git@github.com:scrooloose/nerdcommenter.git
