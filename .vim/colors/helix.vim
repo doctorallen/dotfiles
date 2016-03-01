@@ -19,7 +19,7 @@ highlight Comment                   guifg=#4e4e4e ctermfg=239 gui=italic
 highlight Constant                  guifg=#0087af ctermfg=31
 highlight Define                    guifg=#af8787 ctermfg=138
 highlight Error                     guifg=#ffdf5f ctermfg=221 guibg=#990000 ctermbg=88
-highlight Function                  guifg=#ffdf5f ctermfg=221 gui=NONE cterm=NONE
+highlight Function                  guifg=#af8787 ctermfg=221 gui=NONE cterm=NONE
 highlight Identifier                guifg=#0087af ctermfg=31 gui=NONE cterm=NONE
 highlight Include                   guifg=#af8787 ctermfg=138 gui=NONE cterm=NONE
 highlight PreCondit                 guifg=#af8787 ctermfg=138 gui=NONE cterm=NONE
@@ -37,6 +37,8 @@ highlight Visual                    guibg=#5f5f87 ctermbg=60
 highlight DiffAdd                   guifg=#E6E1DC ctermfg=7 guibg=#519F50 ctermbg=71
 highlight DiffDelete                guifg=#E6E1DC ctermfg=7 guibg=#660000 ctermbg=52
 highlight Special                   guifg=#d75f5f ctermfg=167 
+highlight SpecialKey                guifg=#4e4e4e ctermfg=239 
+highlight NonText                  guifg=#4e4e4e ctermfg=239 
 
 highlight pythonBuiltin             guifg=#0087af ctermfg=31 gui=NONE cterm=NONE
 highlight rubyBlockParameter        guifg=#FFFFFF ctermfg=15
@@ -46,7 +48,7 @@ highlight rubyInstanceVariable      guifg=#D0D0FF ctermfg=189
 highlight rubyInterpolation         guifg=#ff5f00 ctermfg=202
 highlight rubyLocalVariableOrMethod guifg=#D0D0FF ctermfg=189
 highlight rubyPredefinedConstant    guifg=#d75f5f ctermfg=167
-highlight rubyPseudoVariable        guifg=#ffdf5f ctermfg=221
+highlight rubyPseudoVariable        guifg=#af8787 ctermfg=221
 highlight rubyStringDelimiter       guifg=#A5C261 ctermfg=143
 
 highlight xmlTag                    guifg=#E8BF6A ctermfg=179
@@ -68,4 +70,5 @@ highlight apacheSection             guifg=#d7875f ctermfg=173
 highlight NERDTreeDir               guifg=#0087af ctermfg=31
 highlight NERDTreeUp                guifg=#0087af ctermfg=31
 highlight shFunctionKey             guifg=#d7875f ctermfg=173
+highlight phpClasses                guifg=#E3EDFF ctermfg=173
 hi link shFunction                  vimSetEqual
