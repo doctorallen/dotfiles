@@ -17,7 +17,19 @@ syntax on
 set background=dark
 set t_Co=256
 colorscheme helix
+set guifont=Monaco\ for\ Powerline:h13
 set cursorline
+
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+
+let g:ag_prg="sift -n"
+
+let g:ag_highlight=1
+
+let g:ag_format="%f:%l:%m"
 
 "folding settings
 "set foldmethod=indent
@@ -28,10 +40,20 @@ set cursorline
 set ffs=unix,dos,mac
 filetype plugin indent on
 
+set list
+set listchars=tab:▸\ ,eol:¬
+
+map <D-p> <c-p>
+
 " paste and indent
 map <leader>P P'[v']=
 map <leader>p p'[v']=
-map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+map <F2> :NERDTreeToggle<CR>
+map <F3> :NERDTreeFind<CR>
+map <F4> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+nnoremap <F5> :GundoToggle<CR>
+
+let NERDTreeIgnore = ['\.swp$']
 
 " wordwraps a paragraph
 map <leader>q gqap
