@@ -1,78 +1,96 @@
-" http://py.vaults.ca/~x/python_and_vim.html
+set nocompatible                              " use the newest vim settings
 
 call pathogen#infect()
 call pathogen#helptags()
 
-set backspace=2 sts=4 ts=4 sw=4 smarttab noet ai nocp wrap
-set ruler nowrap backspace=2 hidden showmatch matchtime=3
-set wrap incsearch ignorecase hlsearch mouse=a
-set updatecount=50 showmatch matchtime=3
-set modeline modelines=5 nu spr
-set iskeyword-=_
-set suffixes=.bak,~,.o,.h,.info,.swp,.obj,.pyc
-set wildmenu
-set wildmode=list:longest,full
+"-----------Searching----------"
+set hlsearch                                            " when there is a previous search pattern, highlight all the matches
+set ignorecase                                          " ignore case while searching
+set incsearch                                           " show search matches incrementally as you are typing
+set suffixes=.bak,~,.o,.h,.info,.swp,.obj,.pyc          " give lower precendence to these file suffixes when searching
 
-syntax on
-set background=dark
-set t_Co=256
+let g:ag_prg="sift -n"                                  " use sift as the search program for the Ag plugin
+let g:ag_highlight=1                                    " highlight results
+let g:ag_format="%f:%l:%m"                              " format for Ag plugin output
+
+"-----------Visuals----------"
 colorscheme helix
-set guifont=Monaco\ for\ Powerline:h13
-set cursorline
+syntax on                                               " turn on syntax highlighting
+set background=dark                                     " dark background
+set t_Co=256                                            " 256 Color mode in Terminal
+set ruler                                               " show the line and column number of cursor position
+set number                                              " show line numbers
+set wildmenu                                            " command line completion
+set wildmode=list:longest,full                          " display full list of commands
+set cursorline                                          " highlight the line the cursor is on
+set list                                                " show hidden characters
+set listchars=tab:▸\ ,eol:¬                             " show tabs and end of line characters
+let g:airline_theme = 'powerlineish'                    " set airline theme
+let g:airline#extensions#tabline#enabled = 1            " enables powerline to handle tabs
+let g:airline#extensions#tabline#tab_min_count = 2      " only show airline tabline if there is actually a tab
+let g:airline#extensions#tabline#buffer_min_count = 2   "
+let g:airline_powerline_fonts = 1                       " turn powerline fonts on
+set colorcolumn=80                                      " show a column at 80 characters
 
-set guioptions-=l
-set guioptions-=L
-set guioptions-=r
-set guioptions-=R
+"let php_sql_query=1                                    " allow for highlighting of MySQL in PHP strings
+let php_htmlInStrings=1                                 " allow for highlighting of HTML in PHP strings 
+"let php_noShortTags=1
 
-let g:ag_prg="sift -n"
+"-----------GUI (MacVim)----------"
+set guifont=Monaco\ for\ Powerline:h13                  " font for MacVim
+set guioptions-=l                                       " remove left scrollbars
+set guioptions-=L                                       " remove left scrollbars on a split
+set guioptions-=r                                       " remove right scrollbars
+set guioptions-=R                                       " remove right scrollbars on a split
 
-let g:ag_highlight=1
+"-----------Saving----------"
+set updatecount=50                                      " write the swap file to disk after typing 50 chars (default is 200)
 
-let g:ag_format="%f:%l:%m"
+"-----------Splits----------"
+set splitbelow                                          " create all splits to the bottom
+set splitright                                          " create all splits to the right
 
-"folding settings
-"set foldmethod=indent
-"set foldnestmax=10
-"set nofoldenable
-"set foldlevel=1
+"-----------Editing----------"
+set wrap                                                " wrap lines to the next line
+set showmatch matchtime=3                               " when adding a bracket or paren, briefly jump to the matching paren for 3/10 of a second
+set softtabstop=4                                       " when hitting <BS>, pretend like a tab is removed, even if spaces
+set expandtab                                           " expand tabs by default
+set shiftwidth=4                                        " number of spaces to use for autoindenting
+set shiftround                                          " use multiple of shiftwidth when indenting with '<' and '>'
+set tabstop=4                                           " 4 spaces for tab
+set smarttab                                            " use smart tabs (http://vimdoc.sourceforge.net/htmldoc/options.html#'smarttab')
+set autoindent                                          " copy indent from current line when creating a new line
 
-set ffs=unix,dos,mac
-filetype plugin indent on
+set ffs=unix,dos,mac                                    " The types of files that can be opened
+filetype plugin indent on                               " enables file detection, filetype scripts, and filetype indent scripts
 
-set list
-set listchars=tab:▸\ ,eol:¬
 
-map <D-p> <c-p>
 
-" paste and indent
-map <leader>P P'[v']=
-map <leader>p p'[v']=
+"-----------Mappings----------"
+
+" Toogle NERDTree visibility
 map <F2> :NERDTreeToggle<CR>
+
+" Find current buffer in NERDTree
 map <F3> :NERDTreeFind<CR>
+
+" Output the highlight rules under the cursor
 map <F4> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 nnoremap <F5> :GundoToggle<CR>
 
-let NERDTreeIgnore = ['\.swp$']
+" Files that NERDTree Ignores
+let NERDTreeIgnore = ['\.swp$', '\.vagrant\/']
 
 " wordwraps a paragraph
 map <leader>q gqap
-" makes the current window wider by 10 characters
-map <leader>] 10<C-W>
-" makes the current window smaller by 10 characters
-map <leader>[ 10<C-W><
 
-map <leader>v :call TogglePasteMode()<CR>
+" starts the current project's vagrant instance
+map <leader>v :!vagrant up<CR>
 
-map <silent> <leader>l :nohl<CR>
-map <silent> <leader>L :se nu!<CR>
+" reload vimrc file
 nmap <leader>s :source ~/.vimrc<CR>
 
-" Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
-nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
-nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
-nnoremap <silent><leader><o> :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <silent><leader><O> :set paste<CR>m`o<Esc>``:set nopaste<CR>
+"-----------Commands and Functions----------"
 
 " If the current buffer has never been saved, it will have no name,
 " call the file browser to save it, otherwise just save it.
@@ -85,31 +103,28 @@ command -nargs=0 -bar Update if &modified
                            \|endif
 nnoremap <silent> <C-S> :<C-u>Update<CR>
 
-map K <Nop>
-"automatic nerd tree
+" show NERDTree on open except for a git commit message
 autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | wincmd p | endif
-"automatically close vim in NERDTree is the only buffer open
+
+"automatically close vim if NERDTree is the only buffer open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-"vim-airline
-let g:airline_theme = 'powerlineish'
-"let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
-"tabularize
+" tabularize mappings
 map <leader>t= :Tabularize /=<CR>
+map <leader>t> :Tabularize /=><CR>
 map <leader>t: :Tabularize /:<CR>
 map <leader>t, :Tabularize /,<CR>
 
-map <leader>m :set nonumber<CR> :set mouse-=a<CR>
+" Movement through buffers with shift and arrow keys
 map <S-Right> :wincmd l <CR>
 map <S-Left> :wincmd h <CR>
 map <S-Up> :wincmd k <CR>
 map <S-Down> :wincmd j <CR>
 
-:nnoremap <leader>i :setl noai nocin nosi inde=<CR>
+map <Ctrl-Right> :tabnext<CR>
+map <Ctrl-Left> :tabprevious <CR>
 
-"File Type functions
+" Set filetypes based on directory locations and file extension
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead,BufNewFile *.html set filetype=php
@@ -134,11 +149,6 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType make set noexpandtab
 
-let php_sql_query=1
-let php_htmlInStrings=1
-let php_noShortTags=1
-let php_folding=0
-
 autocmd FileType php set makeprg=php\ -l\ %
 autocmd FileType php set errorformat=%m\ in\ %f\ on\ line\ %l
 
@@ -146,26 +156,6 @@ autocmd FileType php set errorformat=%m\ in\ %f\ on\ line\ %l
 
 "let g:syntastic_check_on_open=1
 "let g:syntastic_auto_loc_list=1
-
-"function! MyTabOrComplete()
-"	let col = col('.')-1
-"		if !col || getline('.')[col-1] !~ '\k'
-"		return "\<tab>"
-"	else
-"		return "\<C-N>"
-"	endif
-"endfunction
-"inoremap <Tab> <C-R>=MyTabOrComplete()<CR>
-
-function TogglePasteMode ()
-	if (&paste)
-		set nopaste
-		echo "paste mode off"
-     else
-     	set paste
-     	echo "paste mode on"
-     endif
-endfunction
 
 function Trailspace ()
 	%s/\s\+$//e
@@ -177,16 +167,6 @@ function Condenselines ()
 endfunction
 
 map <leader>n :call Condenselines()<CR>
-
-" external copy paste -- saves selected buffer into your .viminfo file
-" so you can paste it into another vim instance
-vmap <silent> ,y "xy<CR>:wviminfo! ~/.viminfo<CR>
-vmap <silent> ,d "xd<CR>:wviminfo! ~/.viminfo<CR>
-nmap <silent> ,y "xyy<CR>:wviminfo! ~/.viminfo<CR>
-nmap <silent> ,d "xdd<CR>:wviminfo! ~/.viminfo<CR>
-nmap <silent> ,p :rviminfo! ~/.viminfo<CR>"xp
-nmap <silent> ,p :rviminfo! ~/.viminfo<CR>"xp
-nmap ,v :tabedit $MYVIMRC<CR>
 
 " php namespace
 inoremap <Leader>e <C-O>:call PhpExpandClass()<CR>
