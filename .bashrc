@@ -1,10 +1,15 @@
 # .hashrc
 export GOPATH=$HOME/go
-export PATH=~/bin:/usr/bin:/usr/local/bin:$GOPATH/bin:$PATH
+export ANDROID_HOME=/var/lib/android
+export PATH=~/bin:$GOPATH/bin:/usr/local/bin:/usr/bin:~/.composer/vendor/bin:$PATH:$ANDROID_HOME
 export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
 export SVN_EDITOR=vim
 export GIT_EDITOR=vim
 export TERM=xterm-256color
+
+LS_COLORS=$LS_COLORS:'di=0;35:'
+export LS_COLORS
+
 
 #color variables
 
@@ -13,14 +18,14 @@ PURPLE="\[\033[38;5;103m\]"
 GREEN="\[\033[38;5;77m\]"
 LIGHTGREY="\[\033[38;5;246m\]"
 GREY="\[\033[38;5;237m\]"
-ORANGE="\[\033[38;5;202m\]"
+ORANGE="\[\033[38;5;208m\]"
 BLUE="\[\033[38;5;38m\]"
 RED="\[\033[38;5;95m\]"
 LIGHTGREEN="\[\033[38;5;113m\]"
 DEFAULT="\[\033[38;5;7m\]"
 
 SEP="$GREY]$LIGHTGREY-$GREY["
-FILES="\$(/bin/ls -1 | /usr/bin/wc -l | /usr/bin/sed 's: ::g') files, \$(/bin/ls -lha | /usr/bin/grep -m 1 total | /usr/bin/sed 's/total //')"
+FILES="\$(/bin/ls -1 | /usr/bin/wc -l | /usr/bin/sed 's: ::g') files"
 
 
 # Source global definitions
@@ -44,6 +49,7 @@ alias art='php artisan'
 alias dbref='php artisan migrate:refresh --seed'
 alias cda='composer dumpautoload'
 alias v='vagrant'
+alias vim='mvim'
 
 # Make tmux try to reconnect/reattach to an existing session, yet fallback if none are running
 alias tmux="if tmux has; then tmux -2 attach; else tmux -2 new; fi"
@@ -94,8 +100,14 @@ function tagscp(){
 /usr/bin/scp -i ~/.ssh/tag-aws.pem $1 ubuntu@"$2".theatomgroup.com:/home/ubuntu/
 }
 
+function t {
+    echo -ne "\033]0;"$*"\007"
+}
+
 function p(){
 	cd /var/www/"$@"
+	name="$@"
+	t ${name%/}
 }
 
 _p (){
@@ -138,6 +150,20 @@ function _git_prompt() {
     fi
 	 echo -n "$LIGHTGREY-$GREY[$LIGHTGREY"'git \[\033[38;5;'"$ansi"'m\]'"$branch"'\[\e[m\]'"$GREY]"
   fi
+}
+
+function _parse_vagrant_status {
+  status=`vagrant status 2>&1`
+  if [[ -n `echo ${status} | grep "poweroff"` ]]; then
+    echo "[off]"
+  fi
+  if [[ -n `echo ${status} | grep "running"` ]]; then
+    echo "[on]"
+  fi
+  if [[ -n `echo ${status} | grep "aborted"` ]]; then
+    echo "[aborted]"
+  fi
+  return
 }
 
 function _prompt_command() {

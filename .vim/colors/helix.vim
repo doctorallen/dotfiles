@@ -16,20 +16,20 @@ highlight CursorLine                guibg=#1c1c1c ctermbg=233 cterm=NONE
 highlight CursorColumn              guibg=#1c1c1c ctermbg=233 cterm=NONE
 
 highlight Comment                   guifg=#4e4e4e ctermfg=239 gui=italic
-highlight Constant                  guifg=#0087af ctermfg=31
+highlight Constant                  guifg=#448AA9 ctermfg=31
 highlight Define                    guifg=#af8787 ctermfg=138
 highlight Error                     guifg=#ffdf5f ctermfg=221 guibg=#990000 ctermbg=88
 highlight Function                  guifg=#af8787 ctermfg=221 gui=NONE cterm=NONE
-highlight Identifier                guifg=#0087af ctermfg=31 gui=NONE cterm=NONE
+highlight Identifier                guifg=#448AA9 ctermfg=31 gui=NONE cterm=NONE
 highlight Include                   guifg=#af8787 ctermfg=138 gui=NONE cterm=NONE
 highlight PreCondit                 guifg=#af8787 ctermfg=138 gui=NONE cterm=NONE
 highlight Keyword                   guifg=#af8787 ctermfg=138 cterm=NONE
 highlight LineNr                    guifg=#4e4e4e ctermfg=239 ctermbg=234 guibg=#1c1c1c
-highlight Number                    guifg=#ff5f00 ctermfg=202
+highlight Number                    guifg=#FF8147 ctermfg=202
 highlight PreProc                   guifg=#d7875f ctermfg=173
 highlight Search                    guifg=NONE ctermfg=NONE guibg=#2b2b2b ctermbg=235 gui=italic cterm=underline
 highlight Statement                 guifg=#af8787 ctermfg=138 gui=NONE cterm=NONE
-highlight String                    guifg=#ff5f00 ctermfg=202
+highlight String                    guifg=#FF8147 ctermfg=202
 highlight Title                     guifg=#FFFFFF ctermfg=15
 highlight Type                      guifg=#d75f5f ctermfg=167 gui=NONE cterm=NONE
 highlight Visual                    guibg=#5f5f87 ctermbg=60
@@ -40,12 +40,12 @@ highlight Special                   guifg=#d75f5f ctermfg=167
 highlight SpecialKey                guifg=#4e4e4e ctermfg=239 
 highlight NonText                  guifg=#4e4e4e ctermfg=239 
 
-highlight pythonBuiltin             guifg=#0087af ctermfg=31 gui=NONE cterm=NONE
+highlight pythonBuiltin             guifg=#448AA9 ctermfg=31 gui=NONE cterm=NONE
 highlight rubyBlockParameter        guifg=#FFFFFF ctermfg=15
 highlight rubyClass                 guifg=#FFFFFF ctermfg=15
 highlight rubyConstant              guifg=#d75f5f ctermfg=167
 highlight rubyInstanceVariable      guifg=#D0D0FF ctermfg=189
-highlight rubyInterpolation         guifg=#ff5f00 ctermfg=202
+highlight rubyInterpolation         guifg=#FF8147 ctermfg=202
 highlight rubyLocalVariableOrMethod guifg=#D0D0FF ctermfg=189
 highlight rubyPredefinedConstant    guifg=#d75f5f ctermfg=167
 highlight rubyPseudoVariable        guifg=#af8787 ctermfg=221
@@ -55,9 +55,9 @@ highlight xmlTag                    guifg=#E8BF6A ctermfg=179
 highlight xmlTagName                guifg=#E8BF6A ctermfg=179
 highlight xmlEndTag                 guifg=#E8BF6A ctermfg=179
 
-highlight mailSubject               guifg=#ff5f00 ctermfg=202
+highlight mailSubject               guifg=#FF8147 ctermfg=202
 highlight mailHeaderKey             guifg=#ffdf5f ctermfg=221
-highlight mailEmail                 guifg=#ff5f00 ctermfg=202 gui=italic cterm=underline
+highlight mailEmail                 guifg=#FF8147 ctermfg=202 gui=italic cterm=underline
 
 highlight SpellBad                  guifg=#d70000 ctermfg=160 ctermbg=NONE cterm=underline
 highlight SpellRare                 guifg=#d75f87 ctermfg=168 guibg=NONE ctermbg=NONE gui=underline cterm=underline
@@ -67,8 +67,8 @@ highlight Todo                      guifg=#d7875f guibg=#d7875f ctermbg=221 cter
 
 highlight ApacheDeclaration         guibg=#d75f5f ctermfg=167 
 highlight apacheSection             guifg=#d7875f ctermfg=173
-highlight NERDTreeDir               guifg=#0087af ctermfg=31
-highlight NERDTreeUp                guifg=#0087af ctermfg=31
+highlight NERDTreeDir               guifg=#448AA9 ctermfg=31
+highlight NERDTreeUp                guifg=#448AA9 ctermfg=31
 highlight shFunctionKey             guifg=#d7875f ctermfg=173
 highlight phpClasses                guifg=#E3EDFF ctermfg=173
 hi link shFunction                  vimSetEqual
