@@ -126,8 +126,9 @@ map <S-Left> :wincmd h <CR>
 map <S-Up> :wincmd k <CR>
 map <S-Down> :wincmd j <CR>
 
-map <Ctrl-Right> :tabnext<CR>
-map <Ctrl-Left> :tabprevious <CR>
+" Movement through tabs with cmd and arrow keys
+map <D-Right> :tabnext<CR>
+map <D-Left> :tabprevious <CR>
 
 " Set filetypes based on directory locations and file extension
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
