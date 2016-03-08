@@ -26,11 +26,13 @@ set cursorline                                          " highlight the line the
 set list                                                " show hidden characters
 set listchars=tab:▸\ ,eol:¬                             " show tabs and end of line characters
 let g:airline_theme = 'powerlineish'                    " set airline theme
-let g:airline#extensions#tabline#enabled = 1            " enables powerline to handle tabs
-let g:airline#extensions#tabline#tab_min_count = 2      " only show airline tabline if there is actually a tab
-let g:airline#extensions#tabline#buffer_min_count = 2   "
+"let g:airline#extensions#tabline#enabled = 1           " enables powerline to handle tabs
+"let g:airline#extensions#tabline#tab_min_count = 2     " only show airline tabline if there is actually a tab
+"let g:airline#extensions#tabline#buffer_min_count = 2  "
 let g:airline_powerline_fonts = 1                       " turn powerline fonts on
-set colorcolumn=80                                      " show a column at 80 characters
+set colorcolumn=80,120                                  " show a column at 80 characters
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929 "highlights everything past 120 characters with light red background
+"match OverLength /\%120v.\+/
 
 "let php_sql_query=1                                    " allow for highlighting of MySQL in PHP strings
 let php_htmlInStrings=1                                 " allow for highlighting of HTML in PHP strings 
@@ -51,7 +53,7 @@ set splitbelow                                          " create all splits to t
 set splitright                                          " create all splits to the right
 
 "-----------Editing----------"
-set wrap                                                " wrap lines to the next line
+set wrap!                                               " wrap lines to the next line (add ! to prevent wrapping)
 set showmatch matchtime=3                               " when adding a bracket or paren, briefly jump to the matching paren for 3/10 of a second
 set softtabstop=4                                       " when hitting <BS>, pretend like a tab is removed, even if spaces
 set expandtab                                           " expand tabs by default
@@ -94,7 +96,7 @@ nmap <leader>s :source ~/.vimrc<CR>
 
 " If the current buffer has never been saved, it will have no name,
 " call the file browser to save it, otherwise just save it.
-command -nargs=0 -bar Update if &modified
+command! -nargs=0 -bar Update if &modified
                            \|    if empty(bufname('%'))
                            \|        browse confirm write
                            \|    else
@@ -108,6 +110,9 @@ autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | wincmd p | endif
 
 "automatically close vim if NERDTree is the only buffer open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+"retab
+map <leader>r :retab<CR>
 
 " tabularize mappings
 map <leader>t= :Tabularize /=<CR>
@@ -152,16 +157,19 @@ autocmd FileType make set noexpandtab
 autocmd FileType php set makeprg=php\ -l\ %
 autocmd FileType php set errorformat=%m\ in\ %f\ on\ line\ %l
 
+"if saving vimrc, automatically source it
+autocmd! bufwritepost .vimrc source %
+
 "SYNTASTIC CONFIG
 
 "let g:syntastic_check_on_open=1
 "let g:syntastic_auto_loc_list=1
 
-function Trailspace ()
+function! Trailspace ()
 	%s/\s\+$//e
 endfunction
 
-function Condenselines ()
+function! Condenselines ()
 	call Trailspace()
 	%s/\n\{3,}/\r\r/e
 endfunction
