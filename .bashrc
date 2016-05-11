@@ -25,7 +25,7 @@ LIGHTGREEN="\[\033[38;5;113m\]"
 DEFAULT="\[\033[38;5;7m\]"
 
 SEP="$GREY]$LIGHTGREY-$GREY["
-FILES="\$(/bin/ls -1 | /usr/bin/wc -l | /usr/bin/sed 's: ::g') files"
+FILES="\$(ls -1 | wc -l | sed 's: ::g') files"
 
 
 # Source global definitions
@@ -80,24 +80,37 @@ fi
 if [ -f /etc/bash_completion ]; then
 	. /etc/bash_completion
 fi
-
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+if [ hash brew 2>/dev/null ]; then
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+    fi
 fi
 
 # completion of .ssh/hosts
 #complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
 
 function stopvm(){
-/usr/bin/VBoxManage controlvm "$@" poweroff;
+    /usr/bin/VBoxManage controlvm "$@" poweroff;
 }
 
 function tagssh(){
-/usr/bin/ssh -i ~/.ssh/tag-aws.pem ubuntu@"$@".theatomgroup.com
+    /usr/bin/ssh -i ~/.ssh/tag-aws.pem ubuntu@"$@".theatomgroup.com
 }
 
 function tagscp(){
-/usr/bin/scp -i ~/.ssh/tag-aws.pem $1 ubuntu@"$2".theatomgroup.com:/home/ubuntu/
+    /usr/bin/scp -i ~/.ssh/tag-aws.pem $1 ubuntu@"$2".theatomgroup.com:/home/ubuntu/
+}
+
+function s(){
+    scp ~/.bashrc $1:/tmp/.bashrc_temp
+    if [[ $* == *--setup* ]]; then
+        scp -r ~/devops $1:/tmp/devops
+    fi
+    ssh -t $1 "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
+}
+
+function setup(){
+    sh /tmp/devops/scripts/lemp/setup.sh
 }
 
 function t {
