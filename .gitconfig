@@ -11,8 +11,11 @@
 	displaycommentprefix = true
 [alias]
 	st = status
+	aa = add -A
 	ci = commit -v
+	ca = !git aa && git ci
 	br = branch
+	nb = checkout -b
 	co = checkout
 	df = diff
 	dft = difftool
@@ -30,14 +33,16 @@
 	excluded = ls-files --others --ignored --exclude-standard
 	lg = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	pushhead = push origin HEAD
+	up = !git syncthis && git pushhead
 	pushup = push upstream HEAD
 	mergeflow = !git merge --no-ff
 	fall = fetch --all
 	pullbase = pull --rebase
 	remoteclean = fetch -p 
 	merged = !git branch --merged | grep -v '^\\*'
-	localclean = !git merged | xargs --no-run-if-empty git branch -d
+	localclean = !git merged | xargs git branch -d
 	subupdate = submodule update --init --recursive
+	sync = !git pullbase origin `git rev-parse --abbrev-ref HEAD` && git push origin `git rev-parse --abbrev-ref HEAD`
 	syncup = !git checkout master && git pullbase upstream master && git subupdate
 	syncthis = !git pullbase origin HEAD && git subupdate
 	syncthisup = !git pullbase upstream `git rev-parse --abbrev-ref HEAD` && git subupdate
@@ -48,6 +53,15 @@
 	b = branch -a
 	today = log --since='12am' --format='* %s' --author='David Allen'
 	yesterday = log --since='yesterday' --until='12am' --format='* %s' --author='David Allen'
+	ignore = update-index --assume-unchanged
+    mergediff = log --pretty=oneline --abbrev-commit --merges
+	mergediffpr = !git mergediff -i --grep 'pull request'
+	revision = rev-parse HEAD
+	revisionshort = rev-parse --short HEAD
+	root = rev-parse --show-toplevel
+	releasename = !git describe --exact-match --abbrev=0 2>/dev/null || git rev-parse --short HEAD
+	branchliststatus = !git remote update && git branch --list -vv
+	branchls = !git branchliststatus --color=always | sed 's/].*/]/g'
 [core]
 	pager = less -FRSX
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
