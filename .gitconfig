@@ -52,6 +52,8 @@
 	lh = rev-parse HEAD
 	b = branch -a
 	today = log --since='12am' --format='* %s' --author='David Allen'
+	todayall = log --since='12am' --format='* %s'
+    sincelast = !git log `git describe --tags --abbrev=0`..HEAD --oneline --format='* %s'
 	yesterday = log --since='yesterday' --until='12am' --format='* %s' --author='David Allen'
 	ignore = update-index --assume-unchanged
     mergediff = log --pretty=oneline --abbrev-commit --merges
