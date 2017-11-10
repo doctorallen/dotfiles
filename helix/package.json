@@ -1,0 +1,22 @@
+{
+    "name": "helix",
+    "displayName": "Helix",
+    "description": "Helix color scheme",
+    "version": "0.0.1",
+    "publisher": "DoctorAllen",
+    "engines": {
+        "vscode": "^1.18.0"
+    },
+    "categories": [
+        "Themes"
+    ],
+    "contributes": {
+        "themes": [
+            {
+                "label": "Helix",
+                "uiTheme": "vs-dark",
+                "path": "./themes/Helix-color-theme.json"
+            }
+        ]
+    }
+}
