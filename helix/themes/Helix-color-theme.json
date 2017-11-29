@@ -1,7 +1,7 @@
 {
 	"tokenColors": "./Helix.tmTheme",
 	"colors": {
-		"editor.background": "#282A36",
+		"editor.background": "#1d2029",
 		"editor.foreground": "#D7875F",
 		"editorWhitespace.foreground": "#3b3a32",
 		"editor.lineHighlightBackground": "#23343F90",
