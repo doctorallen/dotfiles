@@ -40,6 +40,7 @@
 	pullbase = pull --rebase
 	remoteclean = fetch -p 
 	merged = !git branch --merged | grep -v '^\\*'
+    notmerged = !git branch -a --no-merge
 	localclean = !git merged | xargs git branch -d
 	subupdate = submodule update --init --recursive
 	sync = !git pullbase origin `git rev-parse --abbrev-ref HEAD` && git push origin `git rev-parse --abbrev-ref HEAD`
