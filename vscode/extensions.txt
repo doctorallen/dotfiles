@@ -1,0 +1,32 @@
+Backspace++
+Beter Align
+Copy/Paste detector
+CSS Formatter
+Django Template
+DotENV
+File Utils
+GitLens
+Go
+Helix
+Helix PHPStorm
+IntelliSense for CSS class names
+Laravel Blade Snippets
+LaserWave
+Less IntelliSense
+Markdown All In One
+Markdown Preview Github Styling
+Material Icon Theme
+php cs fixer
+PHP DocBlocker
+PHP Formatter
+PHP IntelliSense
+PHP Namespace Resolver
+php cs
+Python
+Rainbow CSV
+snippet-creator
+SynthWave '84
+Twig
+Vetur
+Vim
+vscode-icons

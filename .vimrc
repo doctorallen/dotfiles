@@ -35,7 +35,7 @@ set colorcolumn=80,120                                  " show a column at 80 ch
 "match OverLength /\%120v.\+/
 
 "let php_sql_query=1                                    " allow for highlighting of MySQL in PHP strings
-let php_htmlInStrings=1                                 " allow for highlighting of HTML in PHP strings 
+let php_htmlInStrings=1                                 " allow for highlighting of HTML in PHP strings
 "let php_noShortTags=1
 
 "-----------GUI (MacVim)----------"
@@ -65,8 +65,6 @@ set autoindent                                          " copy indent from curre
 
 set ffs=unix,dos,mac                                    " The types of files that can be opened
 filetype plugin indent on                               " enables file detection, filetype scripts, and filetype indent scripts
-
-
 
 "-----------Mappings----------"
 
@@ -175,11 +173,28 @@ function! Condenselines ()
 	%s/\n\{3,}/\r\r/e
 endfunction
 
-map <leader>n :call Condenselines()<CR>
+"map <leader>n :call Condenselines()<CR>
+
+"sort lines by length
+vmap <Leader>su ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
 
 " php namespace
-inoremap <Leader>e <C-O>:call PhpExpandClass()<CR>
-noremap <Leader>e :call PhpExpandClass()<CR>
+function! IPhpInsertUse()
+    call PhpInsertUse()
+    call feedkeys('a',  'n')
+endfunction
+autocmd FileType php inoremap <Leader>n <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>n :call PhpInsertUse()<CR>
+
+autocmd FileType php inoremap <Leader>ns <Esc>:call PhpSortUse()<CR>
+autocmd FileType php noremap <Leader>ns :call PhpSortUse()<CR>
+
+function! IPhpExpandClass()
+    call PhpExpandClass()
+    call feedkeys('a', 'n')
+endfunction
+autocmd FileType php inoremap <Leader>nf <Esc>:call IPhpExpandClass()<CR>
+autocmd FileType php noremap <Leader>nf :call PhpExpandClass()<CR>
 
 " PHP-Doc configuration and key-mappings
 autocmd FileType php inoremap <leader>c <ESC>:call PhpDocSingle()<CR>i

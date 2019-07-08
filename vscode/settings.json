@@ -1,0 +1,90 @@
+{
+    "workbench.colorTheme": "Helix PHPStorm",
+    "vim.disableAnnoyingNeovimMessage": true,
+    "editor.fontFamily": "Hack",
+    "editor.fontSize": 13,
+    "editor.minimap.enabled": false,
+    "explorer.openEditors.visible": 0,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.colorCustomizations": {
+        "sideBar.background": "#282A36",
+        "sideBar.border": "#8BE9FD",
+        "sideBar.foreground": "#BD93F9",
+        "gitDecoration.modifiedResourceForeground": "#ff8147",
+        "statusBar.background" : "#303030",
+        "statusBar.noFolderBackground" : "#222225",
+        "statusBar.debuggingBackground": "#511f1f",
+        "editorRuler.foreground": "#303030"
+    },
+    "workbench.startupEditor": "none",
+    "workbench.iconTheme": "material-icon-theme",
+    "symbolOutline.doSort": true,
+    "symbolOutline.doSelect": false,
+    "symbolOutline.sortOrder": [
+      "Class",
+      "Module",
+      "Constant",
+      "Interface",
+      "*",
+      "Constructor",
+      "Function",
+      "Method"
+    ],
+    "symbolOutline.expandNodes": [
+      "Module",
+      "Class",
+      "Interface",
+      "Namespace",
+      "Object",
+      "Package",
+      "Struct"
+    ],
+    "symbolOutline.topLevel": [
+      "*"
+    ],
+    "phpformatter.composer": true,
+    "extensions.ignoreRecommendations": false,
+    "editor.tabCompletion": true,
+    "markdown.extension.showExplorer": false,
+    "php-cs-fixer.config": "/Users/David/dotfiles/.php_cs",
+    "material-icon-theme.showUpdateMessage": false,
+    "editor.rulers": [
+      80,
+      120
+    ],
+    "workbench.statusBar.feedback.visible": false,
+    "editor.renderControlCharacters": false,
+    "breadcrumbs.enabled": true,
+    "window.zoomLevel": 0,
+    "terminal.integrated.fontFamily": "Hack",
+    "python.linting.pylintArgs": [
+      "--load-plugins=pylint_django"
+    ],
+    "gitlens.keymap": "none",
+    "gitlens.currentLine.enabled": false,
+    "gitlens.hovers.currentLine.enabled": false,
+    "gitlens.historyExplorer.enabled": true,
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true,
+    "gitlens.blame.line.enabled" : false,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.advanced.messages": {
+      "suppressCommitHasNoPreviousCommitWarning": false,
+      "suppressCommitNotFoundWarning": false,
+      "suppressFileNotUnderSourceControlWarning": false,
+      "suppressGitVersionWarning": false,
+      "suppressLineUncommittedWarning": false,
+      "suppressNoRepositoryWarning": false,
+      "suppressResultsExplorerNotice": true,
+      "suppressShowKeyBindingsNotice": true,
+      "suppressUpdateNotice": false,
+      "suppressWelcomeNotice": true
+    },
+    "php.suggest.basic": false,
+    "php-cs-fixer.executablePath": "/Users/David/.composer/vendor/bin/php-cs-fixer",
+    "[php]": {
+      "editor.defaultFormatter": "junstyle.php-cs-fixer"
+    },
+    "vetur.format.defaultFormatter.js": "prettier-eslint"
+  }

@@ -1,0 +1,32 @@
+{
+	"Public method": {
+		"prefix": "met",
+		"body": [
+			"public function $1($2)\r",
+			"{\r",
+			"    $0",
+			"}"
+		],
+		"description": "Create a public method."
+	},
+	"Protected Method": {
+		"prefix": "prmet",
+		"body": [
+			"protected function $1($2)\r",
+			"{\r",
+			"    $0",
+			"}"
+		],
+		"description": "Creates a protected method."
+	},
+	"Private Method": {
+		"prefix": "pmet",
+		"body": [
+			"private function $1($2)\r",
+			"{\r",
+			"    $0",
+			"}"
+		],
+		"description": "Creates a private method."
+	}
+}

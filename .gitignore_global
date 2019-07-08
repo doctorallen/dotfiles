@@ -5,3 +5,7 @@
 .deploy
 tags
 *.swp
+*.swn
+*.swo
+idea_temp_LocalResourceRootsList
+.vscode

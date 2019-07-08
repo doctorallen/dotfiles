@@ -1,0 +1,24 @@
+{
+	"tokenColors": "./Helix.tmTheme",
+	"colors": {
+		"editor.background": "#1d2029",
+		"editor.foreground": "#D7875F",
+		"editorWhitespace.foreground": "#3b3a32",
+		"editor.lineHighlightBackground": "#23343F90",
+		"editor.selectionBackground": "#44475A",
+		"editorIndentGuide.background": "#FFFFFF10",
+        "editorGroupHeader.noTabsBackground": null,
+        "editorGroupHeader.tabsBackground": "#191A21",
+        "editorGroupHeader.tabsBorder": null,
+        "tab.activeBackground": "#282A36",
+        "tab.activeForeground": "#F8F8F2",
+        "tab.border": "#191A21",
+        "tab.activeBorder": "#FF79C680",
+        "tab.unfocusedActiveBorder": null,
+        "tab.inactiveBackground": "#21222C",
+        "tab.inactiveForeground": "#6272A4",
+        "tab.unfocusedActiveForeground": null,
+        "tab.unfocusedInactiveForeground": null
+	},
+	"name": "Helix PHPStorm"
+}
