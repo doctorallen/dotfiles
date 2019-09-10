@@ -1,6 +1,5 @@
 {
-    "workbench.colorTheme": "Helix PHPStorm",
-    "vim.disableAnnoyingNeovimMessage": true,
+  "vim.disableAnnoyingNeovimMessage": true,
     "editor.fontFamily": "Hack",
     "editor.fontSize": 13,
     "editor.minimap.enabled": false,
@@ -86,5 +85,9 @@
     "[php]": {
       "editor.defaultFormatter": "junstyle.php-cs-fixer"
     },
-    "vetur.format.defaultFormatter.js": "prettier-eslint"
+    "vetur.format.defaultFormatter.js": "prettier-eslint",
+    "workbench.colorTheme": "Helix PHPStorm",
+    "editor.renderWhitespace": "all",
+    "bracketPairColorizer.showBracketsInGutter": true,
+    "bracketPairColorizer.showHorizontalScopeLine": false
   }
