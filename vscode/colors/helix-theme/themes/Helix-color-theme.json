@@ -18,7 +18,15 @@
         "tab.inactiveBackground": "#21222C",
         "tab.inactiveForeground": "#6272A4",
         "tab.unfocusedActiveForeground": null,
-        "tab.unfocusedInactiveForeground": null
+        "tab.unfocusedInactiveForeground": null,
+        "sideBar.background": "#282A36",
+        "sideBar.border": "#8BE9FD",
+        "sideBar.foreground": "#BD93F9",
+        "gitDecoration.modifiedResourceForeground": "#ff8147",
+        "statusBar.background" : "#303030",
+        "statusBar.noFolderBackground" : "#222225",
+        "statusBar.debuggingBackground": "#511f1f",
+        "editorRuler.foreground": "#303030"
 	},
-	"name": "Helix"
+	"name": "Helix PHPStorm"
 }

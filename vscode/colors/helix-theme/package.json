@@ -1,6 +1,6 @@
 {
-    "name": "helix",
-    "displayName": "Helix",
+    "name": "helix-theme",
+    "displayName": "Helix Theme",
     "description": "Helix color scheme",
     "version": "0.0.1",
     "publisher": "DoctorAllen",
@@ -13,7 +13,7 @@
     "contributes": {
         "themes": [
             {
-                "label": "Helix",
+                "label": "Helix Theme",
                 "uiTheme": "vs-dark",
                 "path": "./themes/Helix-color-theme.json"
             }
