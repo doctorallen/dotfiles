@@ -1,8 +1,12 @@
-# .hashrc
-export GOPATH=$HOME/go
-export ANDROID_HOME=/var/lib/android
-export PATH=~/bin:$GOPATH/bin:/usr/local/bin:/usr/bin:~/.composer/vendor/bin:/usr/local:~/.yarn/bin:$PATH:$ANDROID_HOME
-export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
+# standard PATH for executables
+export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:~/.local/bin:~/local/bin:/usr/bin:/usr/sbin:$PATH"
+# globally installed composer executables
+export PATH="$HOME/.composer/vendor/bin:$HOME/.config/composer/vendor/bin:$PATH"
+# locally installed composer executables
+export PATH="vendor/bin:$PATH"
+# any other locally installed executables
+export PATH="./bin:$PATH"
+#export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
 export SVN_EDITOR=vim
 export GIT_EDITOR=vim
 export TERM=xterm-256color
@@ -10,64 +14,31 @@ export TERM=xterm-256color
 LS_COLORS=$LS_COLORS:'di=0;35:'
 export LS_COLORS
 
-
-#color variables
-
-YELLOW="\[\033[38;5;221m\]"
-PURPLE="\[\033[38;5;103m\]"
-GREEN="\[\033[38;5;77m\]"
-LIGHTGREY="\[\033[38;5;246m\]"
-GREY="\[\033[38;5;237m\]"
-ORANGE="\[\033[38;5;208m\]"
-BLUE="\[\033[38;5;38m\]"
-RED="\[\033[38;5;95m\]"
-LIGHTGREEN="\[\033[38;5;113m\]"
-DEFAULT="\[\033[38;5;7m\]"
-
-SEP="$GREY]$LIGHTGREY-$GREY["
-FILES="\$(ls -1 | wc -l | sed 's: ::g') files"
-
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
-# User specific aliases and functions
-
+# default file creation mode (775)
 umask 002
-alias openhere='nautilus .'
+
+# useful aliases
 alias lsa='ls -lha'
 alias ls='ls -atGF'
 alias ll='ls -latGF'
 alias ack='ack-grep'
-alias gc='cat ~/.gitconfig | grep'
-alias comp-ass='compass watch --css-dir app/webroot/css/ --sass-dir app/webroot/sass/'
-alias lst='sh ~/lstime.sh'
-alias tink='php artisan tinker'
-alias art='php artisan'
-alias dbref='php artisan migrate:refresh --seed'
-alias cda='composer dumpautoload'
 alias v='vagrant'
-alias d='cd ~/Downloads'
 
 # Make tmux try to reconnect/reattach to an existing session, yet fallback if none are running
 alias tmux="if tmux has; then tmux -2 attach; else tmux -2 new; fi"
 
-stty ixany
-stty ixoff -ixon
+# not sure I need these https://www.computerhope.com/unix/ustty.htm
+#stty ixany
+#stty ixoff -ixon
 
 # Add bash aliases.
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
-fi
-
-if [ -f ~/devops/scripts/scripts.sh ]; then
-    source ~/devops/scripts/scripts.sh
-fi
-
-if [ -f /home/ubuntu/devops/scripts/scripts.sh ]; then
-    source /home/ubuntu/devops/scripts/scripts.sh
 fi
 
 if [ -x /usr/bin/dircolors ]; then
@@ -81,98 +52,94 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# git completion scripts
 if [ -f ~/.git-completion.bash ]; then
-	. ~/.git-completion.bash
+    . ~/.git-completion.bash
 fi
 
+# bash completion scripts
 if [ -f /etc/bash_completion ]; then
-	. /etc/bash_completion
+    . /etc/bash_completion
 fi
 
+# bash completion scripts installed via homebrew
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
-. $(brew --prefix)/etc/bash_completion
+    . $(brew --prefix)/etc/bash_completion
 fi
 
 # completion of .ssh/hosts
 #complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
 
-function stopvm(){
-    /usr/bin/VBoxManage controlvm "$@" poweroff;
-}
-
-function tagssh(){
-    /usr/bin/ssh -i ~/.ssh/tag-aws.pem ubuntu@"$@".theatomgroup.com
-}
-
-function tagscp(){
-    /usr/bin/scp -i ~/.ssh/tag-aws.pem $1 ubuntu@"$2".theatomgroup.com:/home/ubuntu/
-}
-
-function s(){
-    scp ~/.bashrc $1:/tmp/.bashrc_temp
-    if [[ $* == *--setup* ]]; then
-        scp ~/devops/scripts/scripts.sh $1:~/scripts.sh
-    fi
-
-    ssh -t $1 "bash --rcfile /tmp/.bashrc_temp"
-
-}
-
-function t {
+# function to change the title of the current terminal tab
+function t() {
     echo -ne "\033]0;"$*"\007"
 }
 
-function p(){
-	cd /var/www/"$@"
-	name="$@"
-	t ${name%/}
+# project function for easily switching projects
+function p() {
+    cd /var/www/"$@"
+    name="$@"
+    t ${name%/}
 }
 
-_p (){
-	local cur
+# projects autocomplete
+_p() {
+    local cur
     cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $( compgen -S/ -d /var/www/$cur | cut -b 10- ) )
+    COMPREPLY=($(compgen -S/ -d /var/www/$cur | cut -b 10-))
 }
 
 complete -o nospace -F _p p
 
-function g(){
-	cd ~/go/src/github.com/doctorallen/"$@"
-}
-
-_g (){
-	local cur
-    cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $( compgen -S/ -d ~/go/src/github.com/doctorallen/$cur | cut -b 44- ) )
-}
-
-complete -o nospace -F _g g
-
+# git prompt
 function _git_prompt() {
-  local git_status="`git status -unormal 2>&1`"
-  if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
-    if [[ "$git_status" =~ nothing\ to\ commit ]]; then
-      local ansi=77
-    elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
-      local ansi=221
-    else
-      local ansi=103
+    local git_status="$(git status -unormal 2>&1)"
+    if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
+        if [[ "$git_status" =~ nothing\ to\ commit ]]; then
+            local ansi=77
+        elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
+            local ansi=221
+        else
+            local ansi=103
+        fi
+        if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
+            branch=${BASH_REMATCH[1]}
+            test "$branch" != master || local ansi=88
+        else
+            # Detached HEAD.  (branch=HEAD is a faster alternative.)
+            branch="($(git describe --all --contains --abbrev=4 HEAD 2>/dev/null ||
+                echo HEAD))"
+        fi
+        echo -n "$LIGHTGREY-$GREY[$LIGHTGREY"'git \[\033[38;5;'"$ansi"'m\]'"$branch"'\[\e[m\]'"$GREY]"
     fi
-    if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
-      branch=${BASH_REMATCH[1]}
-      test "$branch" != master || local ansi=88
-    else
-      # Detached HEAD.  (branch=HEAD is a faster alternative.)
-      branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
-		  echo HEAD`)"
-    fi
-	 echo -n "$LIGHTGREY-$GREY[$LIGHTGREY"'git \[\033[38;5;'"$ansi"'m\]'"$branch"'\[\e[m\]'"$GREY]"
-  fi
 }
 
-source ~/colors.sh
+# Colors used for git prompt
+R_CYAN="\033[38;5;30m"
+R_BRIGHT_CYAN="\033[38;5;37m"
+R_LIGHT_GRAY="\033[0;37m"
+R_GREEN="\033[38;5;34m"
+R_LIGHT_GREEN="\033[38;5;42m"
+R_LIGHT_ORANGE="\033[38;5;215m"
+R_ORANGE="\033[38;5;208m"
+R_RED="\033[38;5;160m"
+R_DARK_GRAY="\033[38;5;241m"
+R_VERY_DARK_GRAY="\033[38;5;236m"
+R_NC="\033[0m"
 
-getGitPrompt () {
+P_CYAN="\[$R_CYAN\]"
+P_BRIGHT_CYAN="\[$R_BRIGHT_CYAN\]"
+P_LIGHT_GRAY="\[$R_LIGHT_GRAY\]"
+P_GREEN="\[$R_GREEN\]"
+P_LIGHT_GREEN="\[$R_LIGHT_GREEN\]"
+P_LIGHT_ORANGE="\[$R_LIGHT_ORANGE\]"
+P_ORANGE="\[$R_ORANGE\]"
+P_RED="\[$R_RED\]"
+P_DARK_GRAY="\[$R_DARK_GRAY\]"
+P_VERY_DARK_GRAY="\[$R_VERY_DARK_GRAY\]"
+P_NC="\[$R_NC\]"
+
+getGitPrompt() {
 
     local exit="$?"
 
@@ -194,12 +161,10 @@ getGitPrompt () {
     local branch_status=""
     local branch=""
 
-
     #
     # Parses the stash list from `git stash list`
     #
-    function parseStash()
-    {
+    function parseStash() {
         local stash_command="$(git stash list 2>/dev/null)"
         local stash_regex="^stash@"
 
@@ -207,9 +172,9 @@ getGitPrompt () {
             x="$REPLY"
 
             if [[ "$x" =~ $stash_regex ]]; then
-                stash_counter=$[stash_counter + 1]
+                stash_counter=$((stash_counter + 1))
             fi
-        done <<< "$stash_command"
+        done <<<"$stash_command"
     }
 
     #
@@ -223,8 +188,7 @@ getGitPrompt () {
     # - Number of stashed changes
     # - Number of conflicts
     #
-    function parseStatus()
-    {
+    function parseStatus() {
         local status_command="$(git status --porcelain -b 2>/dev/null)"
         local ahead_regex="ahead ([0-9]+)"
         local behind_regex="behind ([0-9]+)"
@@ -240,17 +204,17 @@ getGitPrompt () {
 
             # Get conflicts count
             if [[ "$x" =~ $conflicts_regex ]]; then
-                conflicts_counter=$[conflicts_counter + 1]
+                conflicts_counter=$((conflicts_counter + 1))
             fi
 
             # Get staged count
             if [[ "$x" =~ $staged_regex ]]; then
-                staged_counter=$[staged_counter + 1] 
+                staged_counter=$((staged_counter + 1))
             fi
 
             # Get unstaged count
             if [[ "$x" =~ $unstaged_regex ]]; then
-                unstaged_counter=$[unstaged_counter + 1] 
+                unstaged_counter=$((unstaged_counter + 1))
             fi
 
             # Get branch name
@@ -264,35 +228,35 @@ getGitPrompt () {
 
             # Track if ahead: needs push
             if [[ "$x" =~ $ahead_regex ]]; then
-               ahead=${BASH_REMATCH[1]}
+                ahead=${BASH_REMATCH[1]}
             fi
 
             # Track if behind: needs pull
             if [[ "$x" =~ $behind_regex ]]; then
-               behind=${BASH_REMATCH[1]}
+                behind=${BASH_REMATCH[1]}
             fi
 
             # Track additions
-            if [[ "$x" =~ ^"A"[[:space:]]+ ]]; then 
-                addition_counter=$[addition_counter + 1] 
+            if [[ "$x" =~ ^"A"[[:space:]]+ ]]; then
+                addition_counter=$((addition_counter + 1))
             fi
 
             # Track modifications
-            if [[ "$x" =~ ^"M"[[:space:]]+ ]]; then 
-                modification_counter=$[modification_counter + 1] 
+            if [[ "$x" =~ ^"M"[[:space:]]+ ]]; then
+                modification_counter=$((modification_counter + 1))
             fi
 
             # Track deletions
-            if [[ "$x" =~ ^"D"[[:space:]]+ ]]; then 
-                deletion_counter=$[deletion_counter + 1] 
+            if [[ "$x" =~ ^"D"[[:space:]]+ ]]; then
+                deletion_counter=$((deletion_counter + 1))
             fi
 
             # Track untracked files
-            if [[ "$x" =~ ^"??"[[:space:]]+ ]]; then 
-                untracked_counter=$[untracked_counter + 1] 
+            if [[ "$x" =~ ^"??"[[:space:]]+ ]]; then
+                untracked_counter=$((untracked_counter + 1))
             fi
 
-        done <<< "$status_command"
+        done <<<"$status_command"
     }
 
     #
@@ -305,8 +269,7 @@ getGitPrompt () {
     # - Third number is orange, and the is number of untracked files
     # - Fourth number is gray, and is the number of stashed changes
     #
-    function buildStagingString()
-    {
+    function buildStagingString() {
         if [[ $staged_counter > 0 ]]; then
             stage_string+="${P_VERY_DARK_GRAY}∙${P_BRIGHT_CYAN}${staged_counter}"
         fi
@@ -331,8 +294,7 @@ getGitPrompt () {
     #
     # Example: [+10-5]
     #
-    function buildDifferenceString()
-    {
+    function buildDifferenceString() {
         if [[ -n "$branch" && $ahead > 0 && $behind == 0 ]]; then
             difference_string+="$P_DARK_GRAY[+$ahead] "
         fi
@@ -345,23 +307,22 @@ getGitPrompt () {
             difference_string+="$P_DARK_GRAY[+$ahead-$behind] "
         fi
     }
-    
+
     #
     # Gets the icon for the current branch status
     #
-    # * indicates the branch is out of sync with remote (either ahead or behind) 
-    # ✓ indicates everything is ok! 
+    # * indicates the branch is out of sync with remote (either ahead or behind)
+    # ✓ indicates everything is ok!
     # ⚠︎ indicates there are conflicts
     #
-    function determineBranchStatus()
-    {
+    function determineBranchStatus() {
         if [[ $ahead > 0 || $behind > 0 ]]; then
             branch_status=" *"
         fi
 
         if [[ $conflicts_counter > 0 ]]; then
             branch_status=" ⚠︎ "
-        fi 
+        fi
 
         if [[ $unstaged_counter == 0 && $staged_counter == 0 && $conflicts_counter == 0 && $ahead == 0 && $behind == 0 ]]; then
             branch_status=" ✓"
@@ -371,8 +332,7 @@ getGitPrompt () {
     #
     # Final assembly of the prompt string
     #
-    function assemblePromptString()
-    {
+    function assemblePromptString() {
         if [ -z "$branch" ]; then
             prompt_string=""
         elif [[ $ahead > 0 || $behind > 0 ]]; then
@@ -410,21 +370,23 @@ getGitPrompt () {
     return $exit
 }
 
-function _parse_vagrant_status {
-  status=`vagrant status 2>&1`
-  if [[ -n `echo ${status} | grep "poweroff"` ]]; then
-    echo "[off]"
-  fi
-  if [[ -n `echo ${status} | grep "running"` ]]; then
-    echo "[on]"
-  fi
-  if [[ -n `echo ${status} | grep "aborted"` ]]; then
-    echo "[aborted]"
-  fi
-  return
-}
+# colors used for prompt line
+YELLOW="\[\033[38;5;221m\]"
+PURPLE="\[\033[38;5;103m\]"
+GREEN="\[\033[38;5;77m\]"
+LIGHTGREY="\[\033[38;5;246m\]"
+GREY="\[\033[38;5;237m\]"
+ORANGE="\[\033[38;5;208m\]"
+BLUE="\[\033[38;5;38m\]"
+RED="\[\033[38;5;95m\]"
+LIGHTGREEN="\[\033[38;5;113m\]"
+DEFAULT="\[\033[38;5;7m\]"
+
+# variables for prompt line
+SEP="$GREY]$LIGHTGREY-$GREY["
+FILES="\$(ls -1 | wc -l | sed 's: ::g') files"
 
 function _prompt_command() {
-PS1="$GREY[$LIGHTGREY\$(date +%l)$ORANGE:$LIGHTGREY\$(date +%M) $ORANGE\$(date +%p)$SEP$BLUE\u$RED@$ORANGE\h$SEP$BLUE\w$GREY$SEP$RED$FILES$GREY]`getGitPrompt` $DEFAULT\n"'$ '
+    PS1="$GREY[$LIGHTGREY\$(date +%l)$ORANGE:$LIGHTGREY\$(date +%M) $ORANGE\$(date +%p)$SEP$BLUE\u$RED@$ORANGE\h$SEP$BLUE\w$GREY$SEP$RED$FILES$GREY]$(getGitPrompt) $DEFAULT\n"'$ '
 }
 PROMPT_COMMAND=_prompt_command
