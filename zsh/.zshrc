@@ -100,6 +100,10 @@ fi
 # useful aliases
 alias ls='ls -AGF'
 
+if [ -f ~/.zsh/aliases ]; then
+    source ~/.zsh/aliases
+fi
+
 # Custom functions
 
 # function to change the title of the current terminal tab
@@ -124,4 +128,4 @@ _p() {
 complete -o nospace -F _p
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh
