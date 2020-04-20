@@ -72,7 +72,11 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+# default file creation mode (775)
+umask 002
+
 # User configuration
+export GIT_EDITOR=vim
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -80,11 +84,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR='vim'
+else
+    export EDITOR='mvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -93,10 +97,31 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# useful aliases
+alias ls='ls -AGF'
+
+# Custom functions
+
+# function to change the title of the current terminal tab
+function t() {
+    echo -ne "\033]0;"$*"\007"
+}
+
+# project function for easily switching projects
+function p() {
+    cd /var/www/"$@"
+    name="$@"
+    t ${name%/}
+}
+
+# projects autocomplete
+_p() {
+    local cur
+    cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=($(compgen -S/ -d /var/www/$cur | cut -b 10-))
+}
+
+complete -o nospace -F _p
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
