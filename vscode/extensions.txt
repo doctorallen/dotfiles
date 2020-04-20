@@ -1,32 +1,21 @@
-Backspace++
 Beter Align
-Copy/Paste detector
+Bracket Pair Colorizer 2
 CSS Formatter
-Django Template
+Debugger for Chrome
 DotENV
+ESLint
 File Utils
 GitLens
 Go
-Helix
-Helix PHPStorm
+Helix Theme
 IntelliSense for CSS class names
-Laravel Blade Snippets
-LaserWave
-Less IntelliSense
-Markdown All In One
-Markdown Preview Github Styling
+Live Server
 Material Icon Theme
-php cs fixer
-PHP DocBlocker
-PHP Formatter
+open in browser
 PHP IntelliSense
 PHP Namespace Resolver
-php cs
 Python
-Rainbow CSV
-snippet-creator
+shell-format
 SynthWave '84
-Twig
 Vetur
 Vim
-vscode-icons
