@@ -46,7 +46,7 @@
   # last prompt line gets hidden if it would overlap with left prompt.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
-    status                  # exit code of the last command
+    # status                  # exit code of the last command
     command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
     direnv                  # direnv status (https://direnv.net/)
@@ -94,10 +94,10 @@
     # disk_usage            # disk usage
     # ram                   # free RAM
     # swap                  # used swap
-    todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
+    # todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
     timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
-    time                    # current time
+    #time                    # current time
     # =========================[ Line #2 ]=========================
     newline
     # ip                    # ip address and bandwidth usage for a specified network interface
@@ -132,9 +132,9 @@
 
   # Connect left prompt lines with these symbols. You'll probably want to use the same color
   # as POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_FOREGROUND below.
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%240F╭─'
-  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%240F├─'
-  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%240F╰─'
+  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%38F╭─'
+  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%38F├─'
+  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%38F╰─%208F$'
   # Connect right prompt lines with these symbols.
   typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX=
   typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX=
@@ -177,8 +177,8 @@
 
   #################################[ os_icon: os identifier ]##################################
   # OS identifier color.
-  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=232
-  typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=7
+  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=16
+  typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=38 #14 #7
   # Custom icon.
   # typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='⭐'
 
@@ -207,19 +207,19 @@
 
   ##################################[ dir: current directory ]##################################
   # Current directory background color.
-  # typeset -g POWERLEVEL9K_DIR_BACKGROUND=4
+  typeset -g POWERLEVEL9K_DIR_BACKGROUND=208 #202 #92
   # Default current directory foreground color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=254
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND=16 #254
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
   # Replace removed segment suffixes with this symbol.
   typeset -g POWERLEVEL9K_SHORTEN_DELIMITER=
   # Color of the shortened directory segments.
-  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=250
+  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=236 #250
   # Color of the anchor directory segments. Anchor segments are never shortened. The first
   # segment is always an anchor.
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=255
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=16 #255
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
