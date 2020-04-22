@@ -14,6 +14,7 @@ Material Icon Theme
 open in browser
 PHP IntelliSense
 PHP Namespace Resolver
+Prettier
 Python
 shell-format
 SynthWave '84
