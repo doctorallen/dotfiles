@@ -33,16 +33,14 @@
   "symbolOutline.topLevel": ["*"],
   "phpformatter.composer": true,
   "extensions.ignoreRecommendations": false,
-  "editor.tabCompletion": true,
+  "editor.tabCompletion": "onlySnippets",
   "markdown.extension.showExplorer": false,
   "php-cs-fixer.config": "/Users/David/dotfiles/.php_cs",
   "material-icon-theme.showUpdateMessage": false,
   "editor.rulers": [80, 120],
   "workbench.statusBar.feedback.visible": false,
   "editor.renderControlCharacters": false,
-  "breadcrumbs.enabled": true,
   "window.zoomLevel": 2,
-  "terminal.integrated.fontFamily": "Hack",
   "python.linting.pylintArgs": ["--load-plugins=pylint_django"],
   "gitlens.keymap": "none",
   "gitlens.currentLine.enabled": false,
@@ -64,27 +62,52 @@
     "suppressUpdateNotice": false,
     "suppressWelcomeNotice": true
   },
-  "php.suggest.basic": false,
-  "php-cs-fixer.executablePath": "/Users/David/.composer/vendor/bin/php-cs-fixer",
+  "php-cs-fixer.executablePath": "${extensionPath}/php-cs-fixer.phar",
   "[php]": {
-    "editor.defaultFormatter": "junstyle.php-cs-fixer"
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
   },
   "vetur.format.defaultFormatter.js": "prettier-eslint",
   "explorer.confirmDragAndDrop": false,
   "zenMode.centerLayout": false,
-  "bracket-pair-colorizer-2.colors": ["Orchid", "Green", "LightSkyBlue"],
-  "editor.wordWrap": "on",
-  "explorer.compactFolders": false,
-  "editor.detectIndentation": false,
-  "editor.renderWhitespace": "none",
-  "editor.formatOnSave": true,
+  "editor.wordWrap": "off",
   "workbench.colorTheme": "Helix Theme",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.singleQuote": true,
   "[javascript]": {
-    "editor.tabSize": 2
+    "editor.tabSize": 8
   },
   "[markdown]": {
     "editor.formatOnSave": false
-  }
+  },
+  "files.exclude": {
+    "**/node_modules": true
+  },
+  "explorer.compactFolders": false,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "todo-tree.tree.showScanModeButton": false,
+  "editor.formatOnSave": true,
+  "aws.profile": "profile:default",
+  "php-cs-fixer.lastDownload": 1620922915889,
+  "workbench.editor.untitled.hint": "hidden",
+  "editor.cursorStyle": "line",
+  "editor.insertSpaces": false,
+  "editor.lineNumbers": "on",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+  "sonarlint.ls.javaHome": "/Users/david/.vscode/extensions/sonarsource.sonarlint_managed-jre/jre/jdk-11.0.11+9-jre/Contents/Home",
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript"],
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "terminal.integrated.fontFamily": "Hack Nerd Font",
+  "terminal.integrated.shellIntegration.enabled": true,
+  "explorer.confirmDelete": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.stickyScroll.enabled": true,
+  "omnisharp.useModernNet": false,
+  "omnisharp.monoPath": "/Library/Frameworks/Mono.framework/Versions/Current/Commands/mono",
+  "color-highlight.markerType": "dot-after",
+  "color-highlight.markRuler": false
 }
