@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+ZSH_DISABLE_COMPFIX="true"
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/david/.oh-my-zsh"
@@ -68,8 +69,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git pj)
-PROJECT_PATHS=(~/projects)
+plugins=(git pj composer aws)
+
+# configuration for pj plugin
+export PROJECT_PATHS=(~/projects)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -88,7 +91,7 @@ export GIT_EDITOR=vim
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
 else
-    export EDITOR='mvim'
+    export EDITOR='code'
 fi
 
 # Compilation flags
@@ -99,8 +102,10 @@ fi
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 # useful aliases
-alias ls='ls -AGF'
+#alias ls='ls -AGF'
+alias ls='ls -lha'
 alias p='pj'
+alias sail='bash vendor/bin/sail'
 
 if [ -f ~/.zsh/aliases ]; then
     source ~/.zsh/aliases
@@ -120,4 +125,20 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+export ANDROID_HOME=/Users/david/Library/Android/sdk
+export ANDROID_SDK_ROOT=/Users/david/Library/Android/sdk
+export ANDROID_AVD_HOME=/Users/david/.android/avd
+export JAVA_HOME=`/usr/libexec/java_home`
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# avdmanager, sdkmanager
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+
+# adb, logcat
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+
+# emulator
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+export PATH=/Users/david/projects/datamura-scripts/bin:$PATH

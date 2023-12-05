@@ -4,7 +4,6 @@
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
   "editor.minimap.enabled": false,
-  "explorer.openEditors.visible": 0,
   "workbench.editor.enablePreview": false,
   "workbench.editor.tabSizing": "shrink",
   "workbench.startupEditor": "none",
@@ -88,7 +87,6 @@
   "editor.formatOnSave": true,
   "aws.profile": "profile:default",
   "php-cs-fixer.lastDownload": 1620922915889,
-  "workbench.editor.untitled.hint": "hidden",
   "editor.cursorStyle": "line",
   "editor.insertSpaces": false,
   "editor.lineNumbers": "on",
@@ -109,5 +107,11 @@
   "omnisharp.useModernNet": false,
   "omnisharp.monoPath": "/Library/Frameworks/Mono.framework/Versions/Current/Commands/mono",
   "color-highlight.markerType": "dot-after",
-  "color-highlight.markRuler": false
+  "color-highlight.markRuler": false,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "todo-tree.tree.showCountsInTree": true,
+  "githubPullRequests.pullBranch": "never",
+  "workbench.editor.empty.hint": "hidden"
 }
