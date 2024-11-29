@@ -1,80 +1,24 @@
 {
-  "vim.disableAnnoyingNeovimMessage": true,
   "editor.fontFamily": "Hack",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
   "editor.minimap.enabled": false,
-  "workbench.editor.enablePreview": false,
   "workbench.editor.tabSizing": "shrink",
   "workbench.startupEditor": "none",
-  "workbench.iconTheme": "material-icon-theme",
-  "symbolOutline.doSort": true,
-  "symbolOutline.doSelect": false,
-  "symbolOutline.sortOrder": [
-    "Class",
-    "Module",
-    "Constant",
-    "Interface",
-    "*",
-    "Constructor",
-    "Function",
-    "Method"
-  ],
-  "symbolOutline.expandNodes": [
-    "Module",
-    "Class",
-    "Interface",
-    "Namespace",
-    "Object",
-    "Package",
-    "Struct"
-  ],
-  "symbolOutline.topLevel": ["*"],
-  "phpformatter.composer": true,
+  "workbench.iconTheme": "helium-icon-theme",
   "extensions.ignoreRecommendations": false,
   "editor.tabCompletion": "onlySnippets",
-  "markdown.extension.showExplorer": false,
-  "php-cs-fixer.config": "/Users/David/dotfiles/.php_cs",
-  "material-icon-theme.showUpdateMessage": false,
   "editor.rulers": [80, 120],
-  "workbench.statusBar.feedback.visible": false,
   "editor.renderControlCharacters": false,
   "window.zoomLevel": 2,
-  "python.linting.pylintArgs": ["--load-plugins=pylint_django"],
-  "gitlens.keymap": "none",
-  "gitlens.currentLine.enabled": false,
-  "gitlens.hovers.currentLine.enabled": false,
-  "gitlens.historyExplorer.enabled": true,
-  "gitlens.views.fileHistory.enabled": true,
-  "gitlens.views.lineHistory.enabled": true,
-  "gitlens.blame.line.enabled": false,
-  "gitlens.codeLens.enabled": false,
-  "gitlens.advanced.messages": {
-    "suppressCommitHasNoPreviousCommitWarning": false,
-    "suppressCommitNotFoundWarning": false,
-    "suppressFileNotUnderSourceControlWarning": false,
-    "suppressGitVersionWarning": false,
-    "suppressLineUncommittedWarning": false,
-    "suppressNoRepositoryWarning": false,
-    "suppressResultsExplorerNotice": true,
-    "suppressShowKeyBindingsNotice": true,
-    "suppressUpdateNotice": false,
-    "suppressWelcomeNotice": true
-  },
-  "php-cs-fixer.executablePath": "${extensionPath}/php-cs-fixer.phar",
-  "[php]": {
-    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
-  },
-  "vetur.format.defaultFormatter.js": "prettier-eslint",
   "explorer.confirmDragAndDrop": false,
   "zenMode.centerLayout": false,
   "editor.wordWrap": "off",
-  "workbench.colorTheme": "Helix Theme",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.singleQuote": true,
-  "[javascript]": {
-    "editor.tabSize": 8
-  },
+  // "[javascript]": {
+  //   "editor.tabSize": 2
+  // },
   "[markdown]": {
     "editor.formatOnSave": false
   },
@@ -83,18 +27,14 @@
   },
   "explorer.compactFolders": false,
   "liveServer.settings.donotShowInfoMsg": true,
-  "todo-tree.tree.showScanModeButton": false,
   "editor.formatOnSave": true,
-  "aws.profile": "profile:default",
-  "php-cs-fixer.lastDownload": 1620922915889,
   "editor.cursorStyle": "line",
   "editor.insertSpaces": false,
   "editor.lineNumbers": "on",
   "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
-  "sonarlint.ls.javaHome": "/Users/david/.vscode/extensions/sonarsource.sonarlint_managed-jre/jre/jdk-11.0.11+9-jre/Contents/Home",
   "javascript.updateImportsOnFileMove.enabled": "never",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["javascript"],
   "editor.bracketPairColorization.enabled": true,
@@ -113,5 +53,27 @@
   },
   "todo-tree.tree.showCountsInTree": true,
   "githubPullRequests.pullBranch": "never",
-  "workbench.editor.empty.hint": "hidden"
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.colorCustomizations": {
+    "tab.activeBackground": "#1F467E",
+    // "tab.activeBackground": "#333C4D",
+    "tab.inactiveBackground": "#1D2636",
+    "sideBar.background": "#1D2636",
+    "editor.background": "#0c111a",
+    // "editor.background": "#1A1B26",
+    "breadcrumb.background": "#1D2636",
+    "tab.activeBorder": "#0CABC7"
+  },
+  "workbench.colorTheme": "Helix Theme",
+  "arduino.useArduinoCli": true,
+  "editor.renderWhitespace": "none",
+  "editor.largeFileOptimizations": false,
+  "go.formatTool": "gofmt",
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "workbench.editor.enablePreview": false,
+  "[sql]": {
+    "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+  }
 }
