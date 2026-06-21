@@ -1,4 +1,4 @@
-# If you come from bash you might have to change your $PATH.
+
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 ZSH_DISABLE_COMPFIX="true"
 
@@ -141,4 +141,6 @@ export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-export PATH=/Users/david/projects/datamura-scripts/bin:$PATH
+
+export PATH="$HOME/.docker/bin":$PATH
+export PATH="$PATH:$(go env GOPATH)/bin"
