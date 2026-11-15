@@ -13,6 +13,7 @@
 #   packages   install the base packages for this OS
 #   shell      make zsh your login shell
 #   fonts      install the Hack Nerd Font that the prompt's icons need
+#   tour       show TOUR.md, or one section of it: tour vim
 #
 #   -n         dry run: print what would happen, change nothing
 #
@@ -454,9 +455,37 @@ cmd_fonts() {
 	esac
 }
 
+# ------------------------------------------------------------------ tour ----
+
+# Shows TOUR.md, or only the section whose heading starts with the given word.
+cmd_tour() {
+	local file="$DOTFILES/TOUR.md" topic="${1:-}" text
+	if [ -n "$topic" ]; then
+		text="$(awk -v t="$topic" '
+			/^## / { show = (index(tolower($0), "## " tolower(t)) == 1) }
+			show' "$file")"
+		if [ -z "$text" ]; then
+			fail "error" "no section called '$topic'. Sections:"
+			sed -n 's/^## /  /p' "$file" | tr '[:upper:]' '[:lower:]' >&2
+			exit 2
+		fi
+	else
+		text="$(cat "$file")"
+	fi
+	if [ -t 1 ] && command -v glow >/dev/null 2>&1; then
+		if [ -n "$topic" ]; then
+			printf '%s\n' "$text" | glow -
+		else
+			printf '%s\n' "$text" | glow -p -
+		fi
+	else
+		printf '%s\n' "$text"
+	fi
+}
+
 # ------------------------------------------------------------------ main ----
 
-usage() { sed -n '3,18p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '3,19p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
 while getopts "nh" opt; do
 	case "$opt" in
@@ -466,6 +495,11 @@ while getopts "nh" opt; do
 	esac
 done
 shift $((OPTIND - 1))
+
+if [ "${1:-}" = tour ]; then
+	cmd_tour "${2:-}"
+	exit 0
+fi
 
 case "$OS" in
 	windows)

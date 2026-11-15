@@ -10,6 +10,7 @@
     unlink     remove the symlinks this script created
     packages   install the base packages with winget, then the font
     fonts      install the Hack Nerd Font for the current user
+    tour       show TOUR.md, the guide to what this setup includes
 
     Creating symlinks on Windows needs either Developer Mode
     (Settings > System > For developers) or an elevated PowerShell.
@@ -21,7 +22,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Position = 0)]
-    [ValidateSet('install', 'deps', 'link', 'status', 'unlink', 'packages', 'fonts')]
+    [ValidateSet('install', 'deps', 'link', 'status', 'unlink', 'packages', 'fonts', 'tour')]
     [string]$Command = 'install',
 
     [switch]$DryRun
@@ -237,6 +238,10 @@ function Invoke-Fonts {
 }
 
 switch ($Command) {
+    'tour'     {
+        $tour = Join-Path $Dotfiles 'TOUR.md'
+        if ((Get-Command glow -ErrorAction SilentlyContinue) -and -not [Console]::IsOutputRedirected) { glow -p $tour } else { Get-Content $tour }
+    }
     'deps'     { Invoke-Deps }
     'packages' { Invoke-Packages; Invoke-Fonts }
     'fonts'    { Invoke-Fonts }

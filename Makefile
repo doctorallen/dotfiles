@@ -23,6 +23,7 @@ help: ## Show this help
 	@echo "  packages   Install the base packages for this OS (brew / apt / winget)"
 	@echo "  shell      Make zsh your login shell"
 	@echo "  fonts      Install the Hack Nerd Font that the prompt's icons need"
+	@echo "  tour       Show what this setup includes and how to use it"
 
 install:
 	@$(RUN) install
@@ -51,4 +52,7 @@ shell:
 fonts:
 	@$(RUN) fonts
 
-.PHONY: help install dry-run deps link status unlink packages shell fonts
+tour:
+	@$(RUN) tour
+
+.PHONY: help install dry-run deps link status unlink packages shell fonts tour

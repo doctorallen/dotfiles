@@ -166,6 +166,13 @@ function t() {
     echo -ne "\033]0;"$*"\007"
 }
 
+# `tour` shows what this setup includes; `tour vim` shows one section.
+# (:A follows the ~/.zshrc link back to the dotfiles folder.)
+_dotfiles=${${(%):-%x}:A:h:h}
+function tour() {
+    bash "$_dotfiles/install.sh" tour "$@"
+}
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh
 

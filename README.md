@@ -77,6 +77,7 @@ available through WSL.
 | `make packages` | Install the base packages (Homebrew, apt/dnf/pacman)            |
 | `make shell`    | Make zsh your login shell                                       |
 | `make fonts`    | Install the Hack Nerd Font (Linux desktops; see WSL above)      |
+| `make tour`     | Show [TOUR.md](TOUR.md): what the setup includes and how to use it |
 
 `install.ps1` takes the same names, apart from `shell`: `.\install.ps1 status`,
 `.\install.ps1 link -DryRun`, and so on.
