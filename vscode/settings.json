@@ -10,7 +10,6 @@
   "editor.tabCompletion": "onlySnippets",
   "editor.rulers": [80, 120],
   "editor.renderControlCharacters": false,
-  "window.zoomLevel": 2,
   "explorer.confirmDragAndDrop": false,
   "zenMode.centerLayout": false,
   "editor.wordWrap": "off",
