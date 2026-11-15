@@ -70,7 +70,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git pj composer aws                 # git aliases, project jumper, composer, aws profiles
+    git composer aws                    # git aliases, composer, aws profiles
     gh ng uv                            # completion; each does nothing when its tool is missing
     sudo extract                        # Esc Esc prefixes sudo; `x file` unpacks any archive
     alias-finder colored-man-pages
@@ -118,9 +118,6 @@ unset _plugin _available
 zstyle ':omz:plugins:alias-finder' autoload yes
 zstyle ':omz:plugins:alias-finder' cheaper yes
 
-# configuration for pj plugin
-export PROJECT_PATHS=(~/projects)
-
 source $ZSH/oh-my-zsh.sh
 
 # default file creation mode (775)
@@ -151,7 +148,6 @@ fi
 # useful aliases
 #alias ls='ls -AGF'
 alias ls='ls -lha'
-alias p='pj'
 
 # Debian and Ubuntu install bat under the name batcat
 if ! command -v bat >/dev/null && command -v batcat >/dev/null; then
