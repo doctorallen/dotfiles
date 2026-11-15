@@ -216,6 +216,11 @@ cmd_deps() {
 	clone_if_missing https://github.com/romkatv/powerlevel10k.git \
 		"$omz/custom/themes/powerlevel10k"
 
+	# .zshrc skips plugins an older oh-my-zsh does not have; say so once here.
+	if [ -d "$omz/plugins" ] && [ ! -d "$omz/plugins/uv" ]; then
+		warn "note" "this oh-my-zsh is too old for some plugins in .zshrc: run 'omz update' in zsh"
+	fi
+
 	# zsh plugins that are not part of oh-my-zsh; .zshrc loads the ones it finds.
 	clone_if_missing https://github.com/zsh-users/zsh-autosuggestions.git \
 		"$omz/custom/plugins/zsh-autosuggestions"

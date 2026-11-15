@@ -80,6 +80,7 @@ plugins=(
 # downloads for vim (`make install` puts it there).
 if (( ! $+commands[fzf] )) && [[ -x $HOME/.vim/plugged/fzf/bin/fzf ]]; then
     path+=($HOME/.vim/plugged/fzf/bin)
+    export FZF_BASE="$HOME/.vim/plugged/fzf"   # older oh-my-zsh needs to be told where it is
 fi
 
 # These print a warning or an error in every new shell when their tool is
@@ -100,7 +101,18 @@ for _plugin in fzf-tab zsh-autosuggestions zsh-syntax-highlighting; do
         plugins+=($_plugin)
     fi
 done
-unset _plugin
+
+# Drop any plugin this copy of oh-my-zsh does not have, which happens when it
+# is older than the plugin, instead of printing "plugin not found" in every
+# new shell. `omz update` brings in the missing ones.
+_available=()
+for _plugin in $plugins; do
+    if [[ -d $ZSH/plugins/$_plugin || -d $ZSH/custom/plugins/$_plugin ]]; then
+        _available+=($_plugin)
+    fi
+done
+plugins=($_available)
+unset _plugin _available
 
 # alias-finder: after a command, show a shorter alias for it if one exists
 zstyle ':omz:plugins:alias-finder' autoload yes
