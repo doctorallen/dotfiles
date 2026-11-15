@@ -1,0 +1,7 @@
+# Base packages these dotfiles rely on, one per line.
+# The names are the same on apt, dnf and pacman. Install with `make packages`.
+git
+vim
+zsh
+curl
+make

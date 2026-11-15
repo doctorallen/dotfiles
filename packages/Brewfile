@@ -1,0 +1,9 @@
+# Base packages these dotfiles rely on. Install with `make packages`.
+# To capture everything on this machine instead:
+#   brew bundle dump --force --describe --file packages/Brewfile
+
+brew "git"
+brew "vim"
+
+# Used by the VS Code settings and the powerlevel10k prompt
+cask "font-hack-nerd-font"

@@ -1,0 +1,5 @@
+# Base packages these dotfiles rely on, one winget id per line.
+# Install with `.\install.ps1 packages`.
+Git.Git
+vim.vim
+Microsoft.VisualStudioCode

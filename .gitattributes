@@ -1,0 +1,2 @@
+# Keep LF everywhere so a Windows checkout still works from WSL and Git Bash.
+* text=auto eol=lf
