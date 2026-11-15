@@ -119,6 +119,30 @@ list lives at the top of `.vimrc`, and `make install` fetches them into
 | `:PlugClean`   | Remove plugins that are no longer in the list     |
 | `:PlugUpgrade` | Update vim-plug itself (`.vim/autoload/plug.vim`) |
 
+## Shell plugins and tools
+
+`.zshrc` loads these oh-my-zsh plugins: `git`, `pj`, `composer`, `aws`, `gh`,
+`ng`, `uv`, `sudo`, `extract`, `alias-finder` and `colored-man-pages`, plus
+`fzf`, `zoxide` and `docker` on machines where those tools are installed.
+
+`make deps` also clones three plugins that are not part of oh-my-zsh:
+[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions),
+[zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+and [fzf-tab](https://github.com/Aloxaf/fzf-tab).
+
+`make packages` installs the tools behind them. Homebrew and winget have all
+of them; the Linux list only has the ones every distro packages under the
+same name (`fzf`, `zoxide`, `bat`). Install the rest by hand on Linux and WSL:
+
+| Tool                                        | Install                                             |
+| ------------------------------------------- | --------------------------------------------------- |
+| [gh](https://cli.github.com/)               | `sudo apt install gh`, or see the site for others   |
+| [uv](https://docs.astral.sh/uv/)            | `curl -LsSf https://astral.sh/uv/install.sh \| sh`  |
+| [glow](https://github.com/charmbracelet/glow) | see the install section of its README             |
+| [marp-cli](https://github.com/marp-team/marp-cli) | `npm install -g @marp-team/marp-cli`          |
+
+Marp needs Node everywhere except Homebrew, which bundles it.
+
 ## Machine-specific settings
 
 Keep anything that only belongs on one machine out of the repo:

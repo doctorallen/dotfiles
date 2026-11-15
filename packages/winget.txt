@@ -3,3 +3,10 @@
 Git.Git
 vim.vim
 Microsoft.VisualStudioCode
+# Command-line tools, for PowerShell on the Windows side
+junegunn.fzf
+ajeetdsouza.zoxide
+sharkdp.bat
+charmbracelet.glow
+GitHub.cli
+astral-sh.uv

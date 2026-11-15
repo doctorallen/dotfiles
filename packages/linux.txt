@@ -5,3 +5,8 @@ vim
 zsh
 curl
 make
+# Shell tools that the zsh plugins in .zshrc build on. gh, uv, glow and
+# marp-cli are not packaged under one name everywhere: see the README.
+fzf
+zoxide
+bat
