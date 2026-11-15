@@ -12,6 +12,7 @@
 #   unlink     remove the symlinks this script created
 #   packages   install the base packages for this OS
 #   shell      make zsh your login shell
+#   fonts      install the Hack Nerd Font that the prompt's icons need
 #
 #   -n         dry run: print what would happen, change nothing
 #
@@ -339,13 +340,49 @@ cmd_packages() {
 				fail "error" "no supported package manager (apt, dnf, pacman): install by hand: $pkgs"
 				exit 1
 			fi
+			cmd_fonts
+			;;
+	esac
+}
+
+readonly FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.tar.xz"
+
+# The powerlevel10k prompt draws its icons with a Nerd Font. The font has to
+# be on the machine that draws the terminal window, which for WSL is Windows.
+cmd_fonts() {
+	local dir="${XDG_DATA_HOME:-$HOME/.local/share}/fonts/HackNerdFont"
+
+	case "$OS" in
+		macos)
+			info "fonts" "on macOS the font comes from Homebrew: run 'make packages'"
+			;;
+		wsl)
+			warn "note" "the prompt font belongs on the Windows side. In PowerShell, from this repo:"
+			warn "" "    .\\install.ps1 fonts"
+			warn "" "then choose 'Hack Nerd Font' in Windows Terminal:"
+			warn "" "    Settings > Profiles > Defaults > Appearance > Font face"
+			;;
+		linux)
+			if ! command -v fc-cache >/dev/null 2>&1; then
+				info "skip" "no desktop font system here: install Hack Nerd Font on the machine your terminal runs on"
+			elif ls "$dir"/*.ttf >/dev/null 2>&1; then
+				good "ok" "$(short "$dir")"
+			else
+				info "fonts" "Hack Nerd Font -> $(short "$dir")"
+				if [ "$DRY_RUN" != 1 ]; then
+					mkdir -p "$dir"
+					curl -fsSL "$FONT_URL" | tar -xJ -C "$dir"
+					fc-cache -f "$dir"
+					good "ok" "set your terminal's font to 'Hack Nerd Font'"
+				fi
+			fi
 			;;
 	esac
 }
 
 # ------------------------------------------------------------------ main ----
 
-usage() { sed -n '3,17p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '3,18p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
 while getopts "nh" opt; do
 	case "$opt" in
@@ -375,6 +412,7 @@ case "${1:-install}" in
 	unlink) cmd_unlink ;;
 	packages) cmd_packages ;;
 	shell) cmd_shell ;;
+	fonts) cmd_fonts ;;
 	*) usage >&2; exit 2 ;;
 esac
 

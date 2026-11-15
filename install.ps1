@@ -8,7 +8,8 @@
     link       symlink everything into your profile, backing up what is there
     status     show what is linked, what differs and what is missing
     unlink     remove the symlinks this script created
-    packages   install the base packages with winget
+    packages   install the base packages with winget, then the font
+    fonts      install the Hack Nerd Font for the current user
 
     Creating symlinks on Windows needs either Developer Mode
     (Settings > System > For developers) or an elevated PowerShell.
@@ -20,7 +21,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Position = 0)]
-    [ValidateSet('install', 'deps', 'link', 'status', 'unlink', 'packages')]
+    [ValidateSet('install', 'deps', 'link', 'status', 'unlink', 'packages', 'fonts')]
     [string]$Command = 'install',
 
     [switch]$DryRun
@@ -187,9 +188,58 @@ function Invoke-Packages {
     }
 }
 
+# The zsh prompt in WSL draws its icons with a Nerd Font, and Windows Terminal
+# takes its fonts from Windows, so the font is installed here and not in WSL.
+function Invoke-Fonts {
+    if ($env:OS -ne 'Windows_NT') {
+        throw 'fonts is for Windows only: use install.sh on macOS and Linux'
+    }
+
+    # A per-user install needs no administrator rights: the files go under
+    # the user profile and are registered under HKEY_CURRENT_USER.
+    $fontDir = Join-Path $env:LOCALAPPDATA 'Microsoft\Windows\Fonts'
+    $regKey = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Fonts'
+
+    if (Get-ChildItem -Path $fontDir -Filter 'HackNerdFont*.ttf' -ErrorAction SilentlyContinue) {
+        Say Green 'ok' 'Hack Nerd Font is already installed'
+        return
+    }
+
+    Say Blue 'fonts' "Hack Nerd Font -> $fontDir"
+    if ($DryRun) { return }
+
+    $tmp = Join-Path ([IO.Path]::GetTempPath()) ('hack-nerd-font-' + [guid]::NewGuid())
+    New-Item -ItemType Directory -Path $tmp | Out-Null
+    try {
+        $zip = Join-Path $tmp 'Hack.zip'
+        # Windows PowerShell 5.1 does not use TLS 1.2 unless told to.
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        Invoke-WebRequest -UseBasicParsing -OutFile $zip `
+            -Uri 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip'
+        Expand-Archive -Path $zip -DestinationPath $tmp
+
+        New-Item -ItemType Directory -Force -Path $fontDir | Out-Null
+        if (-not (Test-Path $regKey)) { New-Item -Path $regKey -Force | Out-Null }
+
+        foreach ($ttf in Get-ChildItem -Path $tmp -Filter '*.ttf') {
+            $dest = Join-Path $fontDir $ttf.Name
+            Copy-Item -LiteralPath $ttf.FullName -Destination $dest -Force
+            New-ItemProperty -Path $regKey -Name "$($ttf.BaseName) (TrueType)" `
+                -Value $dest -PropertyType String -Force | Out-Null
+        }
+    }
+    finally {
+        Remove-Item -LiteralPath $tmp -Recurse -Force
+    }
+
+    Say Green 'ok' 'restart Windows Terminal, then choose "Hack Nerd Font" under'
+    Say Green '' 'Settings > Profiles > Defaults > Appearance > Font face'
+}
+
 switch ($Command) {
     'deps'     { Invoke-Deps }
-    'packages' { Invoke-Packages }
+    'packages' { Invoke-Packages; Invoke-Fonts }
+    'fonts'    { Invoke-Fonts }
     'status'   { Get-Manifest | ForEach-Object { Invoke-Status $_ } }
     'unlink'   { Get-Manifest | ForEach-Object { Invoke-Unlink $_ } }
     'link'     { Get-Manifest | ForEach-Object { Invoke-Link $_ } }
