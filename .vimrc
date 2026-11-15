@@ -1,17 +1,40 @@
 set nocompatible                              " use the newest vim settings
 
-call pathogen#infect()
-call pathogen#helptags()
+"-----------Plugins----------"
+" Managed by vim-plug: :PlugInstall to install, :PlugUpdate to update,
+" :PlugClean to remove ones deleted from this list, :PlugUpgrade for vim-plug itself.
+call plug#begin()
+
+" Files and search
+Plug 'preservim/nerdtree'                               " file tree
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }     " fuzzy finder (downloads its own binary)
+Plug 'junegunn/fzf.vim'                                 " :Files, :Buffers, :Rg
+
+" Git
+Plug 'tpope/vim-fugitive'                               " :Git commands
+Plug 'airblade/vim-gitgutter'                           " changed-line markers in the gutter
+
+" Editing
+Plug 'tpope/vim-surround'                               " change surrounding quotes, brackets, tags
+Plug 'tpope/vim-abolish'                                " smart substitution and case coercion
+Plug 'cohama/lexima.vim'                                " auto-close brackets and quotes
+Plug 'mattn/emmet-vim'                                  " HTML/CSS abbreviation expansion
+Plug 'mbbill/undotree'                                  " undo history browser
+
+" Linting
+Plug 'dense-analysis/ale'                               " runs whatever linters are installed, asynchronously
+
+" Status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+call plug#end()
 
 "-----------Searching----------"
 set hlsearch                                            " when there is a previous search pattern, highlight all the matches
 set ignorecase                                          " ignore case while searching
 set incsearch                                           " show search matches incrementally as you are typing
 set suffixes=.bak,~,.o,.h,.info,.swp,.obj,.pyc          " give lower precendence to these file suffixes when searching
-
-let g:ag_prg="sift -n"                                  " use sift as the search program for the Ag plugin
-let g:ag_highlight=1                                    " highlight results
-let g:ag_format="%f:%l:%m"                              " format for Ag plugin output
 
 "-----------Visuals----------"
 colorscheme helix
@@ -76,7 +99,12 @@ map <F3> :NERDTreeFind<CR>
 
 " Output the highlight rules under the cursor
 map <F4> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
-nnoremap <F5> :GundoToggle<CR>
+
+" Toggle the undo history browser
+nnoremap <F5> :UndotreeToggle<CR>
+
+" Fuzzy-find a file in the current directory
+nnoremap <C-p> :Files<CR>
 
 " Files that NERDTree Ignores
 let NERDTreeIgnore = ['\.swp$', '\.vagrant\/']
@@ -104,10 +132,11 @@ command! -nargs=0 -bar Update if &modified
 nnoremap <silent> <C-S> :<C-u>Update<CR>
 
 " show NERDTree on open except for a git commit message
-autocmd VimEnter * if &filetype !=# 'gitcommit' | NERDTree | wincmd p | endif
+" (the exists() check keeps vim quiet before the plugins have been installed)
+autocmd VimEnter * if exists(':NERDTree') && &filetype !=# 'gitcommit' | NERDTree | wincmd p | endif
 
 "automatically close vim if NERDTree is the only buffer open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
 
 "retab
 map <leader>r :retab<CR>
@@ -158,11 +187,6 @@ autocmd FileType php set errorformat=%m\ in\ %f\ on\ line\ %l
 
 "if saving vimrc, automatically source it
 autocmd! bufwritepost .vimrc source %
-
-"SYNTASTIC CONFIG
-
-"let g:syntastic_check_on_open=1
-"let g:syntastic_auto_loc_list=1
 
 function! Trailspace ()
 	%s/\s\+$//e

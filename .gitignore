@@ -1,0 +1,2 @@
+# Plugins are installed here by vim-plug (:PlugInstall), not tracked
+.vim/plugged/
