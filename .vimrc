@@ -3,21 +3,36 @@ set nocompatible                              " use the newest vim settings
 "-----------Plugins----------"
 " Managed by vim-plug: :PlugInstall to install, :PlugUpdate to update,
 " :PlugClean to remove ones deleted from this list, :PlugUpgrade for vim-plug itself.
+
+" vim-polyglot reads this while loading, so it has to be set first.
+" Indent detection is left to vim-sleuth, and polyglot's bundled copy of
+" vim-sensible is off so it can't change the settings further down.
+let g:polyglot_disabled = ['autoindent', 'sensible']
+
 call plug#begin()
 
 " Files and search
 Plug 'preservim/nerdtree'                               " file tree
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }     " fuzzy finder (downloads its own binary)
 Plug 'junegunn/fzf.vim'                                 " :Files, :Buffers, :Rg
+Plug 'tpope/vim-eunuch'                                 " :Rename, :Move, :Delete, :SudoWrite
 
 " Git
 Plug 'tpope/vim-fugitive'                               " :Git commands
+Plug 'tpope/vim-rhubarb'                                " :GBrowse opens the file on GitHub
 Plug 'airblade/vim-gitgutter'                           " changed-line markers in the gutter
 
+" Languages
+Plug 'vim-polyglot/vim-polyglot'                        " syntax and indent for many languages
+Plug 'tpope/vim-sleuth'                                 " detect tabs/spaces and indent width per file
+
 " Editing
+Plug 'tpope/vim-commentary'                             " gcc comments a line, gc a selection
+Plug 'tpope/vim-repeat'                                 " lets . repeat surround and abolish actions
 Plug 'tpope/vim-surround'                               " change surrounding quotes, brackets, tags
 Plug 'tpope/vim-abolish'                                " smart substitution and case coercion
 Plug 'cohama/lexima.vim'                                " auto-close brackets and quotes
+Plug 'godlygeek/tabular'                                " :Tabularize alignment
 Plug 'mattn/emmet-vim'                                  " HTML/CSS abbreviation expansion
 Plug 'mbbill/undotree'                                  " undo history browser
 
@@ -28,7 +43,16 @@ Plug 'dense-analysis/ale'                               " runs whatever linters 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+" PHP
+Plug 'arnaud-lb/vim-php-namespace'                      " insert and sort use statements
+
+" Icons in NERDTree and airline (needs a Nerd Font; has to load after them)
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()
+
+" Ships with Vim: makes % jump between if/else/end and HTML tags
+silent! packadd! matchit
 
 "-----------Searching----------"
 set hlsearch                                            " when there is a previous search pattern, highlight all the matches
