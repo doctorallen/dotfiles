@@ -76,6 +76,12 @@ plugins=(
     alias-finder colored-man-pages
 )
 
+# fzf: where there is no system-wide install, use the copy that vim-plug
+# downloads for vim (`make install` puts it there).
+if (( ! $+commands[fzf] )) && [[ -x $HOME/.vim/plugged/fzf/bin/fzf ]]; then
+    path+=($HOME/.vim/plugged/fzf/bin)
+fi
+
 # These print a warning or an error in every new shell when their tool is
 # missing, so they are only loaded where it is installed. The -x test also
 # rules out a dangling link, which is what an uninstalled Docker Desktop leaves.

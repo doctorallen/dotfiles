@@ -1,0 +1,12 @@
+# Homebrew formulae these dotfiles build on, one per line.
+# Install with `make packages`. Only prebuilt packages are installed: on a
+# Mac that Homebrew has no prebuilt package for (Intel, since September 2026)
+# the formula is skipped rather than compiled from source.
+#
+# git and vim are not listed because macOS ships both.
+fzf       # fuzzy finder: Ctrl-R history, Ctrl-T files, fzf-tab completion
+zoxide    # z <part of a folder name> jumps to it
+gh        # GitHub CLI
+uv        # Python versions, environments and tools
+bat       # cat with syntax highlighting
+glow      # renders Markdown in the terminal

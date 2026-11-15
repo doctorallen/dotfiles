@@ -10,7 +10,7 @@ and Windows.
 ```sh
 git clone https://github.com/doctorallen/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-make packages   # optional: git, vim, zsh and the Hack Nerd Font
+make packages   # optional: shell tools and the Hack Nerd Font
 make install
 ```
 
@@ -130,9 +130,17 @@ list lives at the top of `.vimrc`, and `make install` fetches them into
 [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 and [fzf-tab](https://github.com/Aloxaf/fzf-tab).
 
-`make packages` installs the tools behind them. Homebrew and winget have all
-of them; the Linux list only has the ones every distro packages under the
-same name (`fzf`, `zoxide`, `bat`). Install the rest by hand on Linux and WSL:
+`make packages` installs the tools behind them, from `packages/macos.txt`,
+`packages/linux.txt` or `packages/winget.txt`.
+
+On macOS it only installs prebuilt Homebrew packages, leaves anything already
+installed at its current version, and never compiles from source. Homebrew
+stopped publishing prebuilt packages for Intel Macs in September 2026, so on
+one of those some tools are skipped and listed at the end. `fzf` still works
+there: `.zshrc` falls back to the copy that vim-plug downloads for vim.
+
+The Linux list only has the tools every distro packages under the same name
+(`fzf`, `zoxide`, `bat`). Install the rest by hand on Linux and WSL:
 
 | Tool                                        | Install                                             |
 | ------------------------------------------- | --------------------------------------------------- |
@@ -141,7 +149,7 @@ same name (`fzf`, `zoxide`, `bat`). Install the rest by hand on Linux and WSL:
 | [glow](https://github.com/charmbracelet/glow) | see the install section of its README             |
 | [marp-cli](https://github.com/marp-team/marp-cli) | `npm install -g @marp-team/marp-cli`          |
 
-Marp needs Node everywhere except Homebrew, which bundles it.
+Marp installs through npm on every platform and needs Node 18 or newer.
 
 ## Machine-specific settings
 

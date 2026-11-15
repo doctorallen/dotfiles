@@ -322,19 +322,61 @@ as_root() {
 	if [ "$(id -u)" -eq 0 ]; then run "$@"; else run sudo "$@"; fi
 }
 
+# Package names from a list file: comments and blank lines removed.
+read_list() { sed -e 's/#.*//' -e 's/[[:space:]]*$//' "$1" | grep -v '^$'; }
+
+# True when Homebrew has a prebuilt package (a "bottle") for this Mac.
+# Without one, brew would compile the formula and everything it depends on,
+# which can take hours.
+brew_has_prebuilt() { brew info --json=v2 "$1" 2>/dev/null | grep -q '"cellar"'; }
+
+packages_macos() {
+	local pkg skipped=""
+
+	if ! command -v brew >/dev/null 2>&1; then
+		fail "error" "Homebrew is not installed: see https://brew.sh"
+		exit 1
+	fi
+
+	# One at a time, so that nothing already installed is upgraded and
+	# nothing is ever built from source.
+	for pkg in $(read_list "$DOTFILES/packages/macos.txt"); do
+		if brew list --formula "$pkg" >/dev/null 2>&1; then
+			good "ok" "$pkg"
+		elif brew_has_prebuilt "$pkg"; then
+			info "install" "$pkg"
+			run brew install "$pkg"
+		else
+			skipped="$skipped $pkg"
+		fi
+	done
+
+	if [ -n "$skipped" ]; then
+		warn "skip" "Homebrew has no prebuilt package for this Mac:$skipped"
+		case " $skipped " in *" fzf "*)
+			warn "" "  fzf: nothing to do, 'make install' gives vim its own copy and .zshrc uses it" ;;
+		esac
+		case " $skipped " in *" bat "*)
+			warn "" "  bat: download a release from https://github.com/sharkdp/bat/releases" ;;
+		esac
+	fi
+
+	if ! command -v marp >/dev/null 2>&1; then
+		info "note" "Marp installs through npm: npm install -g @marp-team/marp-cli (needs Node 18 or newer)"
+	fi
+
+	cmd_fonts
+}
+
 cmd_packages() {
-	local list="$DOTFILES/packages/linux.txt" pkgs
+	local pkgs
 
 	case "$OS" in
 		macos)
-			if ! command -v brew >/dev/null 2>&1; then
-				fail "error" "Homebrew is not installed: see https://brew.sh"
-				exit 1
-			fi
-			run brew bundle --file "$DOTFILES/packages/Brewfile"
+			packages_macos
 			;;
 		linux | wsl)
-			pkgs="$(grep -v '^[[:space:]]*#' "$list" | tr '\n' ' ')"
+			pkgs="$(read_list "$DOTFILES/packages/linux.txt" | tr '\n' ' ')"
 			# Word splitting of $pkgs is intended: one argument per package.
 			# shellcheck disable=SC2086
 			if command -v apt-get >/dev/null 2>&1; then
@@ -362,7 +404,15 @@ cmd_fonts() {
 
 	case "$OS" in
 		macos)
-			info "fonts" "on macOS the font comes from Homebrew: run 'make packages'"
+			# Matches both current file names (HackNerdFont-Regular.ttf) and
+			# older ones (Hack Regular Nerd Font Complete.ttf).
+			if ls "$HOME/Library/Fonts"/Hack*Nerd*Font*.ttf >/dev/null 2>&1 ||
+				brew list --cask font-hack-nerd-font >/dev/null 2>&1; then
+				good "ok" "Hack Nerd Font"
+			else
+				info "fonts" "Hack Nerd Font (Homebrew cask)"
+				run brew install --cask font-hack-nerd-font
+			fi
 			;;
 		wsl)
 			warn "note" "the prompt font belongs on the Windows side. In PowerShell, from this repo:"
