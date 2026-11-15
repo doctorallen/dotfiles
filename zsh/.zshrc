@@ -3,7 +3,7 @@
 ZSH_DISABLE_COMPFIX="true"
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/david/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -125,22 +125,40 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export ANDROID_HOME=/Users/david/Library/Android/sdk
-export ANDROID_SDK_ROOT=/Users/david/Library/Android/sdk
-export ANDROID_AVD_HOME=/Users/david/.android/avd
-export JAVA_HOME=`/usr/libexec/java_home`
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-# avdmanager, sdkmanager
-export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
 
-# adb, logcat
-export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+# Android SDK: the first path is the macOS default, the second the Linux one
+for _sdk in "$HOME/Library/Android/sdk" "$HOME/Android/Sdk"; do
+    if [[ -d $_sdk ]]; then
+        export ANDROID_HOME="$_sdk"
+        export ANDROID_SDK_ROOT="$_sdk"
+        export ANDROID_AVD_HOME="$HOME/.android/avd"
+        # avdmanager, sdkmanager / adb, logcat / emulator
+        export PATH="$PATH:$_sdk/tools/bin:$_sdk/platform-tools:$_sdk/emulator"
+        break
+    fi
+done
+unset _sdk
 
-# emulator
-export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+# java_home only exists on macOS
+if [[ -x /usr/libexec/java_home ]]; then
+    export JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null)"
+fi
+
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if ! command -v pyenv >/dev/null && [[ -d $PYENV_ROOT/bin ]]; then
+    export PATH="$PYENV_ROOT/bin:$PATH"
+fi
+if command -v pyenv >/dev/null; then
+    eval "$(pyenv init -)"
+fi
 
 export PATH="$HOME/.docker/bin":$PATH
-export PATH="$PATH:$(go env GOPATH)/bin"
+if command -v go >/dev/null; then
+    export PATH="$PATH:$(go env GOPATH)/bin"
+fi
+
+# Machine-specific settings that don't belong in the dotfiles repo
+if [[ -f ~/.zshrc.local ]]; then
+    source ~/.zshrc.local
+fi

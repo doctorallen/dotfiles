@@ -87,3 +87,6 @@
 	prompt = false
 [hub]
 	protocol = ssh
+[include]
+	# Machine-specific settings that do not belong in the dotfiles repo
+	path = ~/.gitconfig.local
