@@ -325,6 +325,17 @@ as_root() {
 # Package names from a list file: comments and blank lines removed.
 read_list() { sed -e 's/#.*//' -e 's/[[:space:]]*$//' "$1" | grep -v '^$'; }
 
+# Install one thing with Homebrew and nothing else. By default brew follows an
+# install with a cleanup of the whole prefix, which can fail on files that
+# have nothing to do with us (a root-owned leftover from Docker Desktop, for
+# one) and would stop the run halfway through the list.
+brew_install() {
+	if ! run env HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_ENV_HINTS=1 brew install "$@"; then
+		fail "failed" "brew install $*: see the Homebrew output above"
+		PROBLEMS=$((PROBLEMS + 1))
+	fi
+}
+
 # True when Homebrew has a prebuilt package (a "bottle") for this Mac.
 # Without one, brew would compile the formula and everything it depends on,
 # which can take hours.
@@ -345,7 +356,7 @@ packages_macos() {
 			good "ok" "$pkg"
 		elif brew_has_prebuilt "$pkg"; then
 			info "install" "$pkg"
-			run brew install "$pkg"
+			brew_install "$pkg"
 		else
 			skipped="$skipped $pkg"
 		fi
@@ -411,7 +422,7 @@ cmd_fonts() {
 				good "ok" "Hack Nerd Font"
 			else
 				info "fonts" "Hack Nerd Font (Homebrew cask)"
-				run brew install --cask font-hack-nerd-font
+				brew_install --cask font-hack-nerd-font
 			fi
 			;;
 		wsl)
