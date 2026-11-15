@@ -216,6 +216,14 @@ cmd_deps() {
 	clone_if_missing https://github.com/romkatv/powerlevel10k.git \
 		"$omz/custom/themes/powerlevel10k"
 
+	# zsh plugins that are not part of oh-my-zsh; .zshrc loads the ones it finds.
+	clone_if_missing https://github.com/zsh-users/zsh-autosuggestions.git \
+		"$omz/custom/plugins/zsh-autosuggestions"
+	clone_if_missing https://github.com/zsh-users/zsh-syntax-highlighting.git \
+		"$omz/custom/plugins/zsh-syntax-highlighting"
+	clone_if_missing https://github.com/Aloxaf/fzf-tab.git \
+		"$omz/custom/plugins/fzf-tab"
+
 	# vim-plug reads the plugin list from .vimrc, so that has to be linked first.
 	if ! command -v vim >/dev/null 2>&1; then
 		warn "note" "vim is not installed: run 'make packages', then 'make deps'"

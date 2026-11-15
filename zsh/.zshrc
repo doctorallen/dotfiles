@@ -69,7 +69,36 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git pj composer aws)
+plugins=(
+    git pj composer aws                 # git aliases, project jumper, composer, aws profiles
+    gh ng uv                            # completion; each does nothing when its tool is missing
+    sudo extract                        # Esc Esc prefixes sudo; `x file` unpacks any archive
+    alias-finder colored-man-pages
+)
+
+# These print a warning or an error in every new shell when their tool is
+# missing, so they are only loaded where it is installed. The -x test also
+# rules out a dangling link, which is what an uninstalled Docker Desktop leaves.
+if (( $+commands[fzf] )); then plugins+=(fzf); fi
+if (( $+commands[zoxide] )); then plugins+=(zoxide); fi
+if [[ -x $commands[docker] ]]; then plugins+=(docker); fi
+
+# Plugins that are not part of oh-my-zsh; `make deps` clones them. The order
+# matters: fzf-tab has to come before the other two, and syntax highlighting
+# has to be last.
+for _plugin in fzf-tab zsh-autosuggestions zsh-syntax-highlighting; do
+    if [[ $_plugin == fzf-tab ]] && (( ! $+commands[fzf] )); then
+        continue
+    fi
+    if [[ -d $ZSH/custom/plugins/$_plugin ]]; then
+        plugins+=($_plugin)
+    fi
+done
+unset _plugin
+
+# alias-finder: after a command, show a shorter alias for it if one exists
+zstyle ':omz:plugins:alias-finder' autoload yes
+zstyle ':omz:plugins:alias-finder' cheaper yes
 
 # configuration for pj plugin
 export PROJECT_PATHS=(~/projects)
@@ -105,6 +134,11 @@ fi
 #alias ls='ls -AGF'
 alias ls='ls -lha'
 alias p='pj'
+
+# Debian and Ubuntu install bat under the name batcat
+if ! command -v bat >/dev/null && command -v batcat >/dev/null; then
+    alias bat='batcat'
+fi
 alias sail='bash vendor/bin/sail'
 
 if [ -f ~/.zsh/aliases ]; then
