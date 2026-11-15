@@ -5,12 +5,13 @@
 #
 # Usage: ./install.sh [-n] <command>
 #
-#   install    link + deps (the default)
+#   install    link + deps, then offer to make zsh your login shell (the default)
 #   deps       fetch oh-my-zsh, powerlevel10k and the vim plugins
 #   link       symlink everything into $HOME, backing up what is already there
 #   status     show what is linked, what differs and what is missing
 #   unlink     remove the symlinks this script created
 #   packages   install the base packages for this OS
+#   shell      make zsh your login shell
 #
 #   -n         dry run: print what would happen, change nothing
 #
@@ -226,10 +227,64 @@ cmd_deps() {
 		run vim -es -u "$HOME/.vimrc" -i NONE -c 'PlugInstall --sync' -c 'qa' || true
 	fi
 
+}
+
+# The login shell on record for this user, which is what a new terminal starts.
+login_shell() {
+	local entry
+	if command -v getent >/dev/null 2>&1 && entry="$(getent passwd "$(id -un)")"; then
+		echo "${entry##*:}"
+	else
+		echo "${SHELL:-}"
+	fi
+}
+
+zsh_is_login_shell() { [ "$(basename "$(login_shell)")" = zsh ]; }
+
+cmd_shell() {
+	local zsh_path
+
+	if ! zsh_path="$(command -v zsh)"; then
+		warn "note" "zsh is not installed: run 'make packages', then 'make shell'"
+		return 0
+	fi
+	if zsh_is_login_shell; then
+		good "ok" "zsh is already your login shell"
+		return 0
+	fi
+
+	# chsh refuses any shell that is not listed in /etc/shells.
+	if [ -r /etc/shells ] && ! grep -qx "$zsh_path" /etc/shells; then
+		info "shell" "adding $zsh_path to /etc/shells"
+		as_root sh -c 'echo "$1" >> /etc/shells' sh "$zsh_path"
+	fi
+
+	info "shell" "making zsh your login shell (chsh may ask for your password)"
+	if run chsh -s "$zsh_path"; then
+		[ "$DRY_RUN" = 1 ] || good "ok" "open a new terminal to start using zsh"
+	else
+		warn "note" "the login shell was not changed: run 'make shell' to try again"
+	fi
+}
+
+# Part of 'install': ask before touching the login shell, and never hang a
+# script that is not attached to a terminal.
+offer_shell() {
+	local answer
+
 	if ! command -v zsh >/dev/null 2>&1; then
-		warn "note" "zsh is not installed: run 'make packages'"
-	elif [ "$(basename "${SHELL:-}")" != zsh ]; then
-		warn "note" "zsh is not your login shell: chsh -s \"\$(command -v zsh)\""
+		warn "note" "zsh is not installed: run 'make packages', then 'make shell'"
+	elif zsh_is_login_shell; then
+		return 0
+	elif [ "$DRY_RUN" = 1 ] || [ ! -t 0 ]; then
+		warn "note" "zsh is not your login shell: run 'make shell'"
+	else
+		printf 'Make zsh your login shell? [y/N] '
+		read -r answer
+		case "$answer" in
+			y | Y | yes) cmd_shell ;;
+			*) info "skip" "left the login shell alone: run 'make shell' to change it later" ;;
+		esac
 	fi
 }
 
@@ -290,7 +345,7 @@ cmd_packages() {
 
 # ------------------------------------------------------------------ main ----
 
-usage() { sed -n '3,16p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '3,17p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
 while getopts "nh" opt; do
 	case "$opt" in
@@ -313,12 +368,13 @@ case "$OS" in
 esac
 
 case "${1:-install}" in
-	install) cmd_link; cmd_deps ;;
+	install) cmd_link; cmd_deps; offer_shell ;;
 	deps) cmd_deps ;;
 	link) cmd_link ;;
 	status) cmd_status ;;
 	unlink) cmd_unlink ;;
 	packages) cmd_packages ;;
+	shell) cmd_shell ;;
 	*) usage >&2; exit 2 ;;
 esac
 

@@ -21,6 +21,7 @@ help: ## Show this help
 	@echo "  status     Show what is linked, what differs and what is missing"
 	@echo "  unlink     Remove the symlinks"
 	@echo "  packages   Install the base packages for this OS (brew / apt / winget)"
+	@echo "  shell      Make zsh your login shell"
 
 install:
 	@$(RUN) install
@@ -43,4 +44,7 @@ unlink:
 packages:
 	@$(RUN) packages
 
-.PHONY: help install dry-run deps link status unlink packages
+shell:
+	@$(RUN) shell
+
+.PHONY: help install dry-run deps link status unlink packages shell
