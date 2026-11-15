@@ -121,8 +121,8 @@ list lives at the top of `.vimrc`, and `make install` fetches them into
 
 ## Shell plugins and tools
 
-`.zshrc` loads these oh-my-zsh plugins: `git`, `pj`, `composer`, `aws`, `gh`,
-`ng`, `uv`, `sudo`, `extract`, `alias-finder` and `colored-man-pages`, plus
+`.zshrc` loads these oh-my-zsh plugins: `git`, `composer`, `aws`, `gh`, `ng`,
+`uv`, `sudo`, `extract`, `alias-finder` and `colored-man-pages`, plus
 `fzf`, `zoxide` and `docker` on machines where those tools are installed.
 
 `make deps` also clones three plugins that are not part of oh-my-zsh:
