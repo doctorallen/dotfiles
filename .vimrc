@@ -61,10 +61,22 @@ set incsearch                                           " show search matches in
 set suffixes=.bak,~,.o,.h,.info,.swp,.obj,.pyc          " give lower precendence to these file suffixes when searching
 
 "-----------Visuals----------"
-colorscheme helix
-syntax on                                               " turn on syntax highlighting
-set background=dark                                     " dark background
 set t_Co=256                                            " 256 Color mode in Terminal
+" Use the theme's exact colors where the terminal can show them (iTerm2 can,
+" Apple's Terminal before macOS 26 cannot and gets the nearest of 256).
+if has('termguicolors') && $COLORTERM =~# '^\(truecolor\|24bit\)$'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"                " needed inside tmux
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+" Let Vim pick the regexp engine per pattern. macOS's /usr/bin/vim defaults to
+" the old backtracking one, which stalls on TypeScript's syntax patterns until
+" 'redrawtime' runs out and Vim switches highlighting off.
+set regexpengine=0
+syntax on                                               " turn on syntax highlighting
+" LCARS from Esper Themes, built by scripts/build-vim-colors.js (helix is
+" there too). The colorscheme sets 'background' itself.
+colorscheme lcars
 set ruler                                               " show the line and column number of cursor position
 set number                                              " show line numbers
 set wildmenu                                            " command line completion
@@ -72,7 +84,7 @@ set wildmode=list:longest,full                          " display full list of c
 set cursorline                                          " highlight the line the cursor is on
 set list                                                " show hidden characters
 set listchars=tab:▸\ ,eol:¬                             " show tabs and end of line characters
-let g:airline_theme = 'powerlineish'                    " set airline theme
+let g:airline_theme = 'esper'                           " takes its colors from the colorscheme (.vim/autoload/airline/themes/esper.vim)
 "let g:airline#extensions#tabline#enabled = 1           " enables powerline to handle tabs
 "let g:airline#extensions#tabline#tab_min_count = 2     " only show airline tabline if there is actually a tab
 "let g:airline#extensions#tabline#buffer_min_count = 2  "

@@ -107,6 +107,18 @@ To manage another file, add it to the repo and add one line to `manifest` in
 
 `iterm2/` is not linked: import it from iTerm2's settings.
 
+## Vim colors
+
+`.vim/colors/` holds the LCARS and Helix themes from Esper Themes, generated
+from the VS Code extension's theme files so the two editors use the same
+colors. `.vimrc` picks LCARS; `:colorscheme helix` switches. The
+status line (airline's `esper` theme) takes its colors from it too. After the
+theme changes, rebuild with:
+
+```sh
+node scripts/build-vim-colors.js
+```
+
 ## Vim plugins
 
 Plugins are managed by [vim-plug](https://github.com/junegunn/vim-plug). The
