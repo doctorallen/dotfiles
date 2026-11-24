@@ -7,6 +7,7 @@ Microsoft.VisualStudioCode
 junegunn.fzf
 ajeetdsouza.zoxide
 sharkdp.bat
+eza-community.eza
 charmbracelet.glow
 GitHub.cli
 astral-sh.uv

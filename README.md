@@ -146,6 +146,11 @@ and [fzf-tab](https://github.com/Aloxaf/fzf-tab).
 `make packages` installs the tools behind them, from `packages/macos.txt`,
 `packages/linux.txt` or `packages/winget.txt`.
 
+Where [eza](https://eza.rocks/) is installed, `.zshrc` uses it for `ls`, `l`,
+`ll` and `la` (icons, folders first, git status in long listings) and adds
+`lt` and `tree` for a tree view that skips what `.gitignore` ignores. Without
+it those names keep their plain `ls` meaning.
+
 On macOS it only installs prebuilt Homebrew packages, leaves anything already
 installed at its current version, and never compiles from source. Homebrew
 stopped publishing prebuilt packages for Intel Macs in September 2026, so on
@@ -158,6 +163,7 @@ The Linux list only has the tools every distro packages under the same name
 | Tool                                        | Install                                             |
 | ------------------------------------------- | --------------------------------------------------- |
 | [gh](https://cli.github.com/)               | `sudo apt install gh`, or see the site for others   |
+| [eza](https://eza.rocks/)                   | `sudo apt install eza` on Ubuntu 24.04+ and Debian 13+, otherwise see its [install docs](https://github.com/eza-community/eza/blob/main/INSTALL.md) |
 | [uv](https://docs.astral.sh/uv/)            | `curl -LsSf https://astral.sh/uv/install.sh \| sh`  |
 | [glow](https://github.com/charmbracelet/glow) | see the install section of its README             |
 | [marp-cli](https://github.com/marp-team/marp-cli) | `npm install -g @marp-team/marp-cli`          |

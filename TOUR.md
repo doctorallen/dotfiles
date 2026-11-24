@@ -171,6 +171,8 @@ Plugins: `:PlugUpdate` updates, `:PlugInstall` installs new ones from
 |---|---|
 | `bat file` | `cat` with syntax highlighting and line numbers |
 | `glow README.md` | Read Markdown in the terminal; `glow -p` pages it |
+| `ll`, `la` | Long list with git status (`la` includes hidden files); needs eza |
+| `lt`, `tree` | Tree view that respects `.gitignore` (`lt` goes two levels deep); needs eza |
 | `gh pr create`, `gh pr list`, `gh pr checkout 12` | Pull requests from the terminal |
 | `gh pr view --web`, `gh repo view --web` | Open the pull request or repo in the browser |
 | `uv venv`, `uv pip install -r requirements.txt` | Fast Python environments and installs |

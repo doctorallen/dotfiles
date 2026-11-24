@@ -153,6 +153,19 @@ alias ls='ls -lha'
 if ! command -v bat >/dev/null && command -v batcat >/dev/null; then
     alias bat='batcat'
 fi
+
+# eza: a modern ls with icons and git status. Without it, `ls` above and
+# oh-my-zsh's l, ll and la stay as they are. This has to come after oh-my-zsh
+# is sourced, because it defines those three too.
+if command -v eza >/dev/null; then
+    alias ls='eza --icons=auto --group-directories-first'
+    alias l='ls -l --git'
+    alias ll='ls -l --git'
+    alias la='ls -la --git'
+    alias lt='ls --tree --level=2 --git-ignore'
+    alias tree='ls --tree --git-ignore'
+fi
+
 alias sail='bash vendor/bin/sail'
 
 if [ -f ~/.zsh/aliases ]; then

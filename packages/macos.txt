@@ -9,4 +9,5 @@ zoxide    # z <part of a folder name> jumps to it
 gh        # GitHub CLI
 uv        # Python versions, environments and tools
 bat       # cat with syntax highlighting
+eza       # ls with icons, git status and a tree view
 glow      # renders Markdown in the terminal
